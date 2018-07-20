@@ -1,0 +1,1380 @@
+<?xml version="1.0"?>
+<!DOCTYPE profile>
+<profile xmlns="http://www.suse.com/1.0/yast2ns" xmlns:config="http://www.suse.com/1.0/configns">
+  <add-on>
+    <add_on_products config:type="list"/>
+  </add-on>
+  <bootloader>
+    <device_map config:type="list">
+      <device_map_entry>
+        <firmware>hd0</firmware>
+        <linux>/dev/sda</linux>
+      </device_map_entry>
+      <device_map_entry>
+        <firmware>hd1</firmware>
+        <linux>/dev/sdb</linux>
+      </device_map_entry>
+    </device_map>
+    <global>
+      <activate>false</activate>
+      <append> resume=/dev/disk/by-uuid/ee476349-be56-4bc7-b225-f8075e3c356d splash=silent quiet showopts</append>
+      <default>0</default>
+      <distributor/>
+      <failsafe_disabled>true</failsafe_disabled>
+      <gfxmode>auto</gfxmode>
+      <os_prober>true</os_prober>
+      <terminal>gfxterm</terminal>
+      <timeout config:type="integer">8</timeout>
+      <vgamode/>
+    </global>
+    <loader_type>grub2-efi</loader_type>
+  </bootloader>
+  <deploy_image>
+    <image_installation config:type="boolean">false</image_installation>
+  </deploy_image>
+  <firewall>
+    <FW_ALLOW_FW_BROADCAST_DMZ>no</FW_ALLOW_FW_BROADCAST_DMZ>
+    <FW_ALLOW_FW_BROADCAST_EXT>no</FW_ALLOW_FW_BROADCAST_EXT>
+    <FW_ALLOW_FW_BROADCAST_INT>no</FW_ALLOW_FW_BROADCAST_INT>
+    <FW_ALLOW_FW_TRACEROUTE>yes</FW_ALLOW_FW_TRACEROUTE>
+    <FW_ALLOW_PING_FW>yes</FW_ALLOW_PING_FW>
+    <FW_CONFIGURATIONS_INT/>
+    <FW_IGNORE_FW_BROADCAST_DMZ>no</FW_IGNORE_FW_BROADCAST_DMZ>
+    <FW_IGNORE_FW_BROADCAST_EXT>yes</FW_IGNORE_FW_BROADCAST_EXT>
+    <FW_IGNORE_FW_BROADCAST_INT>no</FW_IGNORE_FW_BROADCAST_INT>
+    <FW_IPSEC_TRUST>no</FW_IPSEC_TRUST>
+    <FW_LOG_ACCEPT_ALL>no</FW_LOG_ACCEPT_ALL>
+    <FW_LOG_ACCEPT_CRIT>yes</FW_LOG_ACCEPT_CRIT>
+    <FW_LOG_DROP_ALL>no</FW_LOG_DROP_ALL>
+    <FW_LOG_DROP_CRIT>yes</FW_LOG_DROP_CRIT>
+    <FW_MASQUERADE>no</FW_MASQUERADE>
+    <FW_PROTECT_FROM_INT>no</FW_PROTECT_FROM_INT>
+    <FW_ROUTE>no</FW_ROUTE>
+    <FW_STOP_KEEP_ROUTING_STATE>no</FW_STOP_KEEP_ROUTING_STATE>
+    <enable_firewall config:type="boolean">false</enable_firewall>
+    <start_firewall config:type="boolean">false</start_firewall>
+  </firewall>
+  <general>
+    <ask-list config:type="list"/>
+    <mode>
+      <confirm config:type="boolean">false</confirm>
+    </mode>
+    <proposals config:type="list"/>
+    <signature-handling>
+      <accept_file_without_checksum config:type="boolean">true</accept_file_without_checksum>
+      <accept_non_trusted_gpg_key config:type="boolean">true</accept_non_trusted_gpg_key>
+      <accept_unknown_gpg_key config:type="boolean">true</accept_unknown_gpg_key>
+      <accept_unsigned_file config:type="boolean">true</accept_unsigned_file>
+      <accept_verification_failed config:type="boolean">false</accept_verification_failed>
+      <import_gpg_key config:type="boolean">true</import_gpg_key>
+    </signature-handling>
+    <storage>
+      <partition_alignment config:type="symbol">align_optimal</partition_alignment>
+      <start_multipath config:type="boolean">false</start_multipath>
+    </storage>
+  </general>
+  <groups config:type="list">
+    <group>
+      <encrypted config:type="boolean">true</encrypted>
+      <gid>100</gid>
+      <group_password>x</group_password>
+      <groupname>users</groupname>
+      <userlist/>
+    </group>
+    <group>
+      <encrypted config:type="boolean">true</encrypted>
+      <gid>14</gid>
+      <group_password>x</group_password>
+      <groupname>uucp</groupname>
+      <userlist/>
+    </group>
+    <group>
+      <encrypted config:type="boolean">true</encrypted>
+      <gid>6</gid>
+      <group_password>x</group_password>
+      <groupname>disk</groupname>
+      <userlist/>
+    </group>
+    <group>
+      <encrypted config:type="boolean">true</encrypted>
+      <gid>496</gid>
+      <group_password>x</group_password>
+      <groupname>polkitd</groupname>
+      <userlist/>
+    </group>
+    <group>
+      <encrypted config:type="boolean">true</encrypted>
+      <gid>19</gid>
+      <group_password>x</group_password>
+      <groupname>floppy</groupname>
+      <userlist/>
+    </group>
+    <group>
+      <encrypted config:type="boolean">true</encrypted>
+      <gid>65534</gid>
+      <group_password>x</group_password>
+      <groupname>nogroup</groupname>
+      <userlist>nobody</userlist>
+    </group>
+    <group>
+      <encrypted config:type="boolean">true</encrypted>
+      <gid>22</gid>
+      <group_password>x</group_password>
+      <groupname>utmp</groupname>
+      <userlist/>
+    </group>
+    <group>
+      <encrypted config:type="boolean">true</encrypted>
+      <gid>42</gid>
+      <group_password>x</group_password>
+      <groupname>trusted</groupname>
+      <userlist/>
+    </group>
+    <group>
+      <encrypted config:type="boolean">true</encrypted>
+      <gid>43</gid>
+      <group_password>x</group_password>
+      <groupname>modem</groupname>
+      <userlist/>
+    </group>
+    <group>
+      <encrypted config:type="boolean">true</encrypted>
+      <gid>65533</gid>
+      <group_password>x</group_password>
+      <groupname>nobody</groupname>
+      <userlist/>
+    </group>
+    <group>
+      <encrypted config:type="boolean">true</encrypted>
+      <gid>49</gid>
+      <group_password>x</group_password>
+      <groupname>ftp</groupname>
+      <userlist/>
+    </group>
+    <group>
+      <encrypted config:type="boolean">true</encrypted>
+      <gid>8</gid>
+      <group_password>x</group_password>
+      <groupname>www</groupname>
+      <userlist/>
+    </group>
+    <group>
+      <encrypted config:type="boolean">true</encrypted>
+      <gid>62</gid>
+      <group_password>x</group_password>
+      <groupname>man</groupname>
+      <userlist/>
+    </group>
+    <group>
+      <encrypted config:type="boolean">true</encrypted>
+      <gid>40</gid>
+      <group_password>x</group_password>
+      <groupname>games</groupname>
+      <userlist/>
+    </group>
+    <group>
+      <encrypted config:type="boolean">true</encrypted>
+      <gid>7</gid>
+      <group_password>x</group_password>
+      <groupname>lp</groupname>
+      <userlist/>
+    </group>
+    <group>
+      <encrypted config:type="boolean">true</encrypted>
+      <gid>33</gid>
+      <group_password>x</group_password>
+      <groupname>video</groupname>
+      <userlist/>
+    </group>
+    <group>
+      <encrypted config:type="boolean">true</encrypted>
+      <gid>21</gid>
+      <group_password>x</group_password>
+      <groupname>console</groupname>
+      <userlist/>
+    </group>
+    <group>
+      <encrypted config:type="boolean">true</encrypted>
+      <gid>2</gid>
+      <group_password>x</group_password>
+      <groupname>daemon</groupname>
+      <userlist/>
+    </group>
+    <group>
+      <encrypted config:type="boolean">true</encrypted>
+      <gid>499</gid>
+      <group_password>x</group_password>
+      <groupname>messagebus</groupname>
+      <userlist/>
+    </group>
+    <group>
+      <encrypted config:type="boolean">true</encrypted>
+      <gid>10</gid>
+      <group_password>x</group_password>
+      <groupname>wheel</groupname>
+      <userlist/>
+    </group>
+    <group>
+      <encrypted config:type="boolean">true</encrypted>
+      <gid>15</gid>
+      <group_password>x</group_password>
+      <groupname>shadow</groupname>
+      <userlist/>
+    </group>
+    <group>
+      <encrypted config:type="boolean">true</encrypted>
+      <gid>54</gid>
+      <group_password>x</group_password>
+      <groupname>lock</groupname>
+      <userlist/>
+    </group>
+    <group>
+      <encrypted config:type="boolean">true</encrypted>
+      <gid>5</gid>
+      <group_password>x</group_password>
+      <groupname>tty</groupname>
+      <userlist/>
+    </group>
+    <group>
+      <encrypted config:type="boolean">true</encrypted>
+      <gid>0</gid>
+      <group_password>x</group_password>
+      <groupname>root</groupname>
+      <userlist/>
+    </group>
+    <group>
+      <encrypted config:type="boolean">true</encrypted>
+      <gid>3</gid>
+      <group_password>x</group_password>
+      <groupname>sys</groupname>
+      <userlist/>
+    </group>
+    <group>
+      <encrypted config:type="boolean">true</encrypted>
+      <gid>16</gid>
+      <group_password>x</group_password>
+      <groupname>dialout</groupname>
+      <userlist/>
+    </group>
+    <group>
+      <encrypted config:type="boolean">true</encrypted>
+      <gid>497</gid>
+      <group_password>x</group_password>
+      <groupname>tape</groupname>
+      <userlist/>
+    </group>
+    <group>
+      <encrypted config:type="boolean">true</encrypted>
+      <gid>20</gid>
+      <group_password>x</group_password>
+      <groupname>cdrom</groupname>
+      <userlist/>
+    </group>
+    <group>
+      <encrypted config:type="boolean">true</encrypted>
+      <gid>17</gid>
+      <group_password>x</group_password>
+      <groupname>audio</groupname>
+      <userlist/>
+    </group>
+    <group>
+      <encrypted config:type="boolean">true</encrypted>
+      <gid>498</gid>
+      <group_password>x</group_password>
+      <groupname>sshd</groupname>
+      <userlist/>
+    </group>
+    <group>
+      <encrypted config:type="boolean">true</encrypted>
+      <gid>32</gid>
+      <group_password>x</group_password>
+      <groupname>public</groupname>
+      <userlist/>
+    </group>
+    <group>
+      <encrypted config:type="boolean">true</encrypted>
+      <gid>13</gid>
+      <group_password>x</group_password>
+      <groupname>news</groupname>
+      <userlist/>
+    </group>
+    <group>
+      <encrypted config:type="boolean">true</encrypted>
+      <gid>41</gid>
+      <group_password>x</group_password>
+      <groupname>xok</groupname>
+      <userlist/>
+    </group>
+    <group>
+      <encrypted config:type="boolean">true</encrypted>
+      <gid>1</gid>
+      <group_password>x</group_password>
+      <groupname>bin</groupname>
+      <userlist>daemon</userlist>
+    </group>
+    <group>
+      <encrypted config:type="boolean">true</encrypted>
+      <gid>9</gid>
+      <group_password>x</group_password>
+      <groupname>kmem</groupname>
+      <userlist/>
+    </group>
+    <group>
+      <encrypted config:type="boolean">true</encrypted>
+      <gid>495</gid>
+      <group_password>x</group_password>
+      <groupname>nscd</groupname>
+      <userlist/>
+    </group>
+    <group>
+      <encrypted config:type="boolean">true</encrypted>
+      <gid>12</gid>
+      <group_password>x</group_password>
+      <groupname>mail</groupname>
+      <userlist/>
+    </group>
+  </groups>
+  <kdump>
+    <add_crash_kernel config:type="boolean">false</add_crash_kernel>
+    <crash_kernel config:type="list"/>
+    <general/>
+  </kdump>
+  <keyboard>
+    <keyboard_values>
+      <delay/>
+      <discaps config:type="boolean">false</discaps>
+      <numlock>bios</numlock>
+      <rate/>
+    </keyboard_values>
+    <keymap>english-us</keymap>
+  </keyboard>
+  <language>
+    <language>en_US</language>
+    <languages/>
+  </language>
+  <login_settings/>
+  <networking>
+    <dns>
+      <dhcp_hostname config:type="boolean">false</dhcp_hostname>
+      <resolv_conf_policy/>
+      <write_hostname config:type="boolean">false</write_hostname>
+    </dns>
+    <interfaces config:type="list">
+      <interface>
+        <bootproto>dhcp</bootproto>
+        <device>eth0</device>
+        <startmode>auto</startmode>
+      </interface>
+      <interface>
+        <bootproto>static</bootproto>
+        <broadcast>127.255.255.255</broadcast>
+        <device>lo</device>
+        <firewall>no</firewall>
+        <ipaddr>127.0.0.1</ipaddr>
+        <netmask>255.0.0.0</netmask>
+        <network>127.0.0.0</network>
+        <prefixlen>8</prefixlen>
+        <startmode>nfsroot</startmode>
+        <usercontrol>no</usercontrol>
+      </interface>
+    </interfaces>
+    <ipv6 config:type="boolean">true</ipv6>
+    <keep_install_network config:type="boolean">false</keep_install_network>
+    <managed config:type="boolean">false</managed>
+    <net-udev config:type="list">
+      <rule>
+        <name>eth0</name>
+        <rule>ATTR{address}</rule>
+        <value>d4:9a:20:de:a5:fc</value>
+      </rule>
+    </net-udev>
+    <routing>
+      <ipv4_forward config:type="boolean">false</ipv4_forward>
+      <ipv6_forward config:type="boolean">false</ipv6_forward>
+    </routing>
+  </networking>
+  <ntp-client>
+    <ntp_policy>auto</ntp_policy>
+    <peers config:type="list">
+      <peer>
+        <address>/var/lib/ntp/drift/ntp.drift </address>
+        <comment>
+# Clients from this (example!) subnet have unlimited access, but only if
+# cryptographically authenticated.
+#restrict 192.168.123.0 mask 255.255.255.0 notrust
+
+##
+## Miscellaneous stuff
+##
+
+</comment>
+        <options/>
+        <type>driftfile</type>
+      </peer>
+      <peer>
+        <address>/var/log/ntp		</address>
+        <comment># path for drift file
+
+</comment>
+        <options/>
+        <type>logfile</type>
+      </peer>
+      <peer>
+        <address>/etc/ntp.keys		</address>
+        <comment># alternate log file
+# logconfig =syncstatus + sysevents
+# logconfig =all
+
+# statsdir /tmp/		# directory for statistics files
+# filegen peerstats  file peerstats  type day enable
+# filegen loopstats  file loopstats  type day enable
+# filegen clockstats file clockstats type day enable
+
+#
+# Authentication stuff
+#
+</comment>
+        <options/>
+        <type>keys</type>
+      </peer>
+      <peer>
+        <address>1			</address>
+        <comment># path for keys file
+</comment>
+        <options/>
+        <type>trustedkey</type>
+      </peer>
+      <peer>
+        <address>1			</address>
+        <comment># define trusted keys
+</comment>
+        <options/>
+        <type>requestkey</type>
+      </peer>
+      <peer>
+        <address>1			</address>
+        <comment># key (7) for accessing server variables
+</comment>
+        <options/>
+        <type>controlkey</type>
+      </peer>
+    </peers>
+    <restricts config:type="list">
+      <restrict>
+        <comment>################################################################################
+## /etc/ntp.conf
+##
+## Sample NTP configuration file.
+## See package 'ntp-doc' for documentation, Mini-HOWTO and FAQ.
+## Copyright (c) 1998 S.u.S.E. GmbH Fuerth, Germany.
+##
+## Author: Michael Andres,  &lt;ma@suse.de&gt;
+##         Michael Skibbe,  &lt;mskibbe@suse.de&gt;
+##
+################################################################################
+
+##
+## Radio and modem clocks by convention have addresses in the 
+## form 127.127.t.u, where t is the clock type and u is a unit 
+## number in the range 0-3. 
+##
+## Most of these clocks require support in the form of a 
+## serial port or special bus peripheral. The particular  
+## device is normally specified by adding a soft link 
+## /dev/device-u to the particular hardware device involved, 
+## where u correspond to the unit number above. 
+## 
+## Generic DCF77 clock on serial port (Conrad DCF77)
+## Address:     127.127.8.u
+## Serial Port: /dev/refclock-u
+##  
+## (create soft link /dev/refclock-0 to the particular ttyS?)
+##
+# server 127.127.8.0 mode 5 prefer
+
+##
+## Undisciplined Local Clock. This is a fake driver intended for backup
+## and when no outside source of synchronized time is available.
+##
+# server 127.127.1.0		# local clock (LCL)
+# fudge  127.127.1.0 stratum 10	# LCL is unsynchronized
+
+##
+## Add external Servers using
+## # rcntpd addserver &lt;yourserver&gt;
+## The servers will only be added to the currently running instance, not
+## to /etc/ntp.conf.
+##
+
+# Access control configuration; see /usr/share/doc/packages/ntp/html/accopt.html for
+# details.  The web page &lt;http://support.ntp.org/bin/view/Support/AccessRestrictions&gt;
+# might also be helpful.
+#
+# Note that "restrict" applies to both servers and clients, so a configuration
+# that might be intended to block requests from certain clients could also end
+# up blocking replies from your own upstream servers.
+
+# By default, exchange time with everybody, but don't allow configuration.
+</comment>
+        <mask/>
+        <options>default notrap nomodify nopeer noquery</options>
+        <target>-4</target>
+      </restrict>
+      <restrict>
+        <comment/>
+        <mask/>
+        <options>default notrap nomodify nopeer noquery</options>
+        <target>-6</target>
+      </restrict>
+      <restrict>
+        <comment>
+# Local users may interrogate the ntp server more closely.
+</comment>
+        <mask/>
+        <options/>
+        <target>127.0.0.1</target>
+      </restrict>
+      <restrict>
+        <comment/>
+        <mask/>
+        <options/>
+        <target>::1</target>
+      </restrict>
+    </restricts>
+    <start_at_boot config:type="boolean">true</start_at_boot>
+    <start_in_chroot config:type="boolean">false</start_in_chroot>
+    <sync_interval config:type="integer">5</sync_interval>
+    <synchronize_time config:type="boolean">false</synchronize_time>
+  </ntp-client>
+  <partitioning config:type="list">
+    <drive>
+      <device>/dev/sda</device>
+      <disklabel>gpt</disklabel>
+      <enable_snapshots config:type="boolean">true</enable_snapshots>
+      <initialize config:type="boolean">true</initialize>
+      <partitions config:type="list">
+        <partition>
+          <create config:type="boolean">true</create>
+          <crypt_fs config:type="boolean">false</crypt_fs>
+          <filesystem config:type="symbol">vfat</filesystem>
+          <format config:type="boolean">true</format>
+          <fstopt>noatime,umask=0002,utf8=true</fstopt>
+          <label>EFI</label>
+          <loop_fs config:type="boolean">false</loop_fs>
+          <mount>/boot/efi</mount>
+          <mountby config:type="symbol">label</mountby>
+          <partition_id config:type="integer">259</partition_id>
+          <partition_nr config:type="integer">1</partition_nr>
+          <resize config:type="boolean">false</resize>
+          <size>201489920</size>
+        </partition>
+        <partition>
+          <create config:type="boolean">true</create>
+          <crypt_fs config:type="boolean">false</crypt_fs>
+          <filesystem config:type="symbol">xfs</filesystem>
+          <format config:type="boolean">true</format>
+          <fstopt>usrquota,grpquota</fstopt>
+          <label>System</label>
+          <loop_fs config:type="boolean">false</loop_fs>
+          <mount>/</mount>
+          <mountby config:type="symbol">label</mountby>
+          <partition_id config:type="integer">131</partition_id>
+          <partition_nr config:type="integer">2</partition_nr>
+          <resize config:type="boolean">false</resize>
+          <size>499238731264</size>
+        </partition>
+        <partition>
+          <create config:type="boolean">true</create>
+          <crypt_fs config:type="boolean">false</crypt_fs>
+          <format config:type="boolean">false</format>
+          <label>Recovery HD</label>
+          <loop_fs config:type="boolean">false</loop_fs>
+          <mountby config:type="symbol">device</mountby>
+          <partition_id config:type="integer">258</partition_id>
+          <partition_nr config:type="integer">3</partition_nr>
+          <resize config:type="boolean">false</resize>
+          <size>641777152</size>
+        </partition>
+      </partitions>
+      <pesize/>
+      <type config:type="symbol">CT_DISK</type>
+      <use>all</use>
+    </drive>
+    <drive>
+      <device>/dev/sdb</device>
+      <disklabel>msdos</disklabel>
+      <enable_snapshots config:type="boolean">true</enable_snapshots>
+      <initialize config:type="boolean">true</initialize>
+      <partitions config:type="list">
+        <partition>
+          <create config:type="boolean">true</create>
+          <crypt_fs config:type="boolean">false</crypt_fs>
+          <filesystem config:type="symbol">swap</filesystem>
+          <format config:type="boolean">true</format>
+          <label>Swap0</label>
+          <loop_fs config:type="boolean">false</loop_fs>
+          <mount>swap</mount>
+          <mountby config:type="symbol">uuid</mountby>
+          <partition_id config:type="integer">130</partition_id>
+          <partition_nr config:type="integer">1</partition_nr>
+          <resize config:type="boolean">false</resize>
+          <size>17173741056</size>
+        </partition>
+        <partition>
+          <create config:type="boolean">true</create>
+          <crypt_fs config:type="boolean">false</crypt_fs>
+          <filesystem config:type="symbol">xfs</filesystem>
+          <format config:type="boolean">true</format>
+          <label>Storage</label>
+          <loop_fs config:type="boolean">false</loop_fs>
+          <mountby config:type="symbol">device</mountby>
+          <partition_id config:type="integer">131</partition_id>
+          <partition_nr config:type="integer">2</partition_nr>
+          <resize config:type="boolean">false</resize>
+          <size>983012900352</size>
+        </partition>
+      </partitions>
+      <pesize/>
+      <type config:type="symbol">CT_DISK</type>
+      <use>all</use>
+    </drive>
+  </partitioning>
+  <proxy>
+    <enabled config:type="boolean">false</enabled>
+    <ftp_proxy/>
+    <http_proxy/>
+    <https_proxy/>
+    <no_proxy>localhost, 127.0.0.1</no_proxy>
+    <proxy_password/>
+    <proxy_user/>
+  </proxy>
+  <report>
+    <errors>
+      <log config:type="boolean">true</log>
+      <show config:type="boolean">true</show>
+      <timeout config:type="integer">0</timeout>
+    </errors>
+    <messages>
+      <log config:type="boolean">true</log>
+      <show config:type="boolean">true</show>
+      <timeout config:type="integer">10</timeout>
+    </messages>
+    <warnings>
+      <log config:type="boolean">true</log>
+      <show config:type="boolean">true</show>
+      <timeout config:type="integer">10</timeout>
+    </warnings>
+    <yesno_messages>
+      <log config:type="boolean">true</log>
+      <show config:type="boolean">true</show>
+      <timeout config:type="integer">10</timeout>
+    </yesno_messages>
+  </report>
+  <services-manager>
+    <default_target>multi-user</default_target>
+    <services>
+      <disable config:type="list"/>
+      <enable config:type="list">
+        <service>sshd</service>
+      </enable>
+    </services>
+  </services-manager>
+  <software>
+    <image/>
+    <instsource/>
+    <packages config:type="list">
+      <package>zsync</package>
+      <package>zip</package>
+      <package>ypserv</package>
+      <package>yast2-kdump</package>
+      <package>xtables-addons</package>
+      <package>xfsprogs</package>
+      <package>xdelta</package>
+      <package>xar</package>
+      <package>whois</package>
+      <package>wdfs</package>
+      <package>wcd</package>
+      <package>vlock</package>
+      <package>vifm</package>
+      <package>upower</package>
+      <package>unzip</package>
+      <package>ulogd</package>
+      <package>tree</package>
+      <package>tmux</package>
+      <package>tmpwatch</package>
+      <package>sysinfo</package>
+      <package>stunnel</package>
+      <package>sssd-tools</package>
+      <package>sssd-krb5</package>
+      <package>sssd-ad</package>
+      <package>sssd</package>
+      <package>sshfs</package>
+      <package>sitecopy</package>
+      <package>unzip-rcc</package>
+      <package>reiserfs</package>
+      <package>rarpd</package>
+      <package>radvd</package>
+      <package>quota-nfs</package>
+      <package>quota</package>
+      <package>prelink</package>
+      <package>powerd</package>
+      <package>policycoreutils-python</package>
+      <package>pinfo</package>
+      <package>pico</package>
+      <package>pesign</package>
+      <package>perl-Bootloader-YAML</package>
+      <package>pbm2l7k</package>
+      <package>patchutils</package>
+      <package>passwdqc</package>
+      <package>pam_ssh</package>
+      <package>pam_smb</package>
+      <package>pam_ccreds</package>
+      <package>pam_apparmor</package>
+      <package>openssh-fips</package>
+      <package>openssh-cavs</package>
+      <package>openslp-server</package>
+      <package>openldap2</package>
+      <package>ntp-doc</package>
+      <package>ntfsprogs</package>
+      <package>nss-mdns</package>
+      <package>nftables</package>
+      <package>nfs-doc</package>
+      <package>netacct</package>
+      <package>net-snmp</package>
+      <package>ndiff</package>
+      <package>nbd-doc</package>
+      <package>nbd</package>
+      <package>nano</package>
+      <package>mtree</package>
+      <package>msmtp-doc</package>
+      <package>mokutil</package>
+      <package>mlocate</package>
+      <package>mksh</package>
+      <package>mgdiff</package>
+      <package>mdadm</package>
+      <package>mcelog</package>
+      <package>mc</package>
+      <package>mbuffer</package>
+      <package>mawk</package>
+      <package>man</package>
+      <package>links</package>
+      <package>rsyslog</package>
+      <package>openssh</package>
+      <package>shim</package>
+      <package>quagga</package>
+      <package>talk</package>
+      <package>su-wrapper</package>
+      <package>sssd-ipa</package>
+      <package>libiw-devel</package>
+      <package>pwgen</package>
+      <package>setools-console</package>
+      <package>libidn-tools</package>
+      <package>mtr</package>
+      <package>mirror</package>
+      <package>lynx</package>
+      <package>mariadb-tools</package>
+      <package>rsyslog-module-udpspoof</package>
+      <package>rsyslog-module-snmp</package>
+      <package>rsyslog-doc</package>
+      <package>rsyslog-diag-tools</package>
+      <package>makewhat</package>
+      <package>rng-tools</package>
+      <package>rdist</package>
+      <package>lftp</package>
+      <package>pam_krb5</package>
+      <package>ntp</package>
+      <package>mailx</package>
+      <package>ldapfuse</package>
+      <package>ksh</package>
+      <package>perl-TermReadLine-Gnu</package>
+      <package>krb5-plugin-preauth-pkinit</package>
+      <package>krb5-plugin-kdb-ldap</package>
+      <package>krb5-client</package>
+      <package>killerd</package>
+      <package>ncftp</package>
+      <package>kexec-tools</package>
+      <package>kdumpid</package>
+      <package>jq</package>
+      <package>ispell-british</package>
+      <package>ispell</package>
+      <package>isight-firmware-tools</package>
+      <package>irssi</package>
+      <package>irda</package>
+      <package>ipxrip</package>
+      <package>ipset-kmp-default</package>
+      <package>ipsec-tools</package>
+      <package>idutils</package>
+      <package>most</package>
+      <package>hostname</package>
+      <package>hostapd</package>
+      <package>hostap-utils</package>
+      <package>plymouth-utils</package>
+      <package>gutenprint</package>
+      <package>gupnp-tools</package>
+      <package>ifplugd</package>
+      <package>nfswatch</package>
+      <package>gssdp-utils</package>
+      <package>grub2-x86_64-efi</package>
+      <package>grub2-branding-upstream</package>
+      <package>groff</package>
+      <package>gpm</package>
+      <package>gpart</package>
+      <package>gnu-netcat</package>
+      <package>nfs4-acl-tools</package>
+      <package>glibc</package>
+      <package>gfxboot-branding-upstream</package>
+      <package>gfxboot</package>
+      <package>yast2-auth-server</package>
+      <package>gcc-info</package>
+      <package>fxload</package>
+      <package>fusesmb</package>
+      <package>finger</package>
+      <package>fbterm</package>
+      <package>etckeeper</package>
+      <package>nfacct</package>
+      <package>efibootmgr</package>
+      <package>ebtables</package>
+      <package>e2fsprogs</package>
+      <package>dosfstools</package>
+      <package>dmidecode</package>
+      <package>diffstat</package>
+      <package>dicts</package>
+      <package>dhcp-client</package>
+      <package>db48-utils</package>
+      <package>dar</package>
+      <package>cyrus-sasl-saslauthd</package>
+      <package>cyrus-sasl-plain</package>
+      <package>cyrus-sasl-ntlm</package>
+      <package>cyrus-sasl-ldap-auxprop</package>
+      <package>cyrus-sasl-gssapi</package>
+      <package>cyrus-sasl-gs2</package>
+      <package>cyrus-sasl-digestmd5</package>
+      <package>cyrus-sasl-crammd5</package>
+      <package>lsb5-core</package>
+      <package>cyrus-sasl</package>
+      <package>cups</package>
+      <package>cryptconfig</package>
+      <package>cronie-anacron</package>
+      <package>kdump</package>
+      <package>clicfs</package>
+      <package>clamav</package>
+      <package>caca-utils</package>
+      <package>cabextract</package>
+      <package>buffer</package>
+      <package>bsdtar</package>
+      <package>bsdiff</package>
+      <package>bsd-games</package>
+      <package>bridge-utils</package>
+      <package>bluez-cups</package>
+      <package>bb</package>
+      <package>bash-loadables</package>
+      <package>jfsutils</package>
+      <package>avahi-utils</package>
+      <package>avahi-autoipd</package>
+      <package>autofs</package>
+      <package>attr</package>
+      <package>at</package>
+      <package>john</package>
+      <package>jigdo</package>
+      <package>irqbalance</package>
+      <package>aspell-en</package>
+      <package>as10k1</package>
+      <package>arpwatch</package>
+      <package>policycoreutils-newrole</package>
+      <package>apache2-mod_php5</package>
+      <package>apache2-mod_fastcgi</package>
+      <package>apache2-mod_dnssd</package>
+      <package>apache2-mod_auth_kerb</package>
+      <package>apache2-example-pages</package>
+      <package>alsa-plugins</package>
+      <package>alpine</package>
+      <package>agrep</package>
+      <package>adns</package>
+      <package>acpid</package>
+      <package>wiggle</package>
+      <package>hplip</package>
+      <package>zd1211-firmware</package>
+      <package>yast2-slp-server</package>
+      <package>yast2-nfs-server</package>
+      <package>yast2-audit-laf</package>
+      <package>apache2</package>
+      <package>udev-persistent-ifnames</package>
+      <package>txt2tags</package>
+      <package>samba</package>
+      <package>ez-ipupdate</package>
+      <package>ext4magic</package>
+      <package>wdiff</package>
+      <package>vpnc</package>
+      <package>units</package>
+      <package>udisks</package>
+      <package>enchant-tools</package>
+      <package>efl-examples</package>
+      <package>openSUSE-release</package>
+      <package>open-lldp</package>
+      <package>numactl</package>
+      <package>nfs-kernel-server</package>
+      <package>minicom</package>
+      <package>susehelp</package>
+      <package>subversion-doc</package>
+      <package>sshfp</package>
+      <package>xfsdump</package>
+      <package>hfsutils</package>
+      <package>smbios-utils-python</package>
+      <package>shorewall-docs</package>
+      <package>selinux-doc</package>
+      <package>samba-doc</package>
+      <package>rt2860</package>
+      <package>rpmconf</package>
+      <package>rfc</package>
+      <package>quilt</package>
+      <package>dracut-fips</package>
+      <package>bindfs</package>
+      <package>dirdiff</package>
+      <package>openldap2-client</package>
+      <package>nmap</package>
+      <package>postfix-doc</package>
+      <package>plymouth-theme-script</package>
+      <package>php-doc</package>
+      <package>perl-doc</package>
+      <package>dos2unix</package>
+      <package>aiccu</package>
+      <package>dhcp-tools</package>
+      <package>dhcp-doc</package>
+      <package>policycoreutils</package>
+      <package>delayacct-utils</package>
+      <package>dateutils</package>
+      <package>dash</package>
+      <package>krb5-doc</package>
+      <package>krb5-appl-servers</package>
+      <package>krb5-appl-clients</package>
+      <package>acct</package>
+      <package>biosdevname</package>
+      <package>wpa_supplicant</package>
+      <package>sblim-sfcb</package>
+      <package>genisoimage</package>
+      <package>openldap2-doc</package>
+      <package>mrtg</package>
+      <package>netconsole-tools</package>
+      <package>miniupnpc</package>
+      <package>link-grammar</package>
+      <package>myspell-en_GB</package>
+      <package>myspell-en</package>
+      <package>ncat</package>
+      <package>man-pages-posix</package>
+      <package>makedev</package>
+      <package>cyrus-sasl-scram</package>
+      <package>cyrus-sasl-otp</package>
+      <package>lsb-release</package>
+      <package>gcal</package>
+      <package>gpgme</package>
+      <package>apache2-mod_perl</package>
+      <package>sssd-proxy</package>
+      <package>sgrep</package>
+      <package>manufacturer-PPDs</package>
+      <package>iw</package>
+      <package>laptop-mode-tools</package>
+      <package>keychain</package>
+      <package>apache2-mod_python</package>
+      <package>kernel-docs</package>
+      <package>man-pages</package>
+      <package>lzop</package>
+      <package>iwatch</package>
+      <package>makeself</package>
+      <package>irssi-extra</package>
+      <package>ipw-firmware</package>
+      <package>iproute2-doc</package>
+      <package>inst-source-utils</package>
+      <package>inotify-tools-doc</package>
+      <package>policycoreutils-sandbox</package>
+      <package>guilt</package>
+      <package>fail2ban</package>
+      <package>etc-update</package>
+      <package>ntfs-3g</package>
+      <package>ddclient</package>
+      <package>zsh-htmldoc</package>
+      <package>cups-backends</package>
+      <package>accountsservice</package>
+      <package>cronic</package>
+      <package>command-not-found</package>
+      <package>colordiff</package>
+      <package>clamav-database</package>
+      <package>memtest86+</package>
+      <package>ca-certificates-cacert</package>
+      <package>bzip2-doc</package>
+      <package>branding-upstream</package>
+      <package>bootsplash-branding-upstream</package>
+      <package>bind-doc</package>
+      <package>sensors</package>
+      <package>keepalived</package>
+      <package>autoyast2</package>
+      <package>atmel-firmware</package>
+      <package>iftop</package>
+      <package>apache2-icons-oxygen</package>
+      <package>apache2-doc</package>
+      <package>alsa-firmware</package>
+      <package>csync</package>
+      <package>ack</package>
+    </packages>
+    <patterns config:type="list">
+      <pattern>yast2_basis</pattern>
+      <pattern>sw_management</pattern>
+      <pattern>lamp_server</pattern>
+      <pattern>enhanced_base</pattern>
+      <pattern>console</pattern>
+      <pattern>base</pattern>
+      <pattern>apparmor</pattern>
+      <pattern>64bit</pattern>
+    </patterns>
+    <remove-packages config:type="list">
+      <package>setools-gui</package>
+      <package>mingetty</package>
+      <package>grubby</package>
+      <package>glibc-32bit</package>
+      <package>krb5-auth-dialog</package>
+      <package>yast2-ntp-client-devel-doc</package>
+      <package>gettext-runtime-mini</package>
+      <package>lsb5</package>
+    </remove-packages>
+  </software>
+  <timezone>
+    <hwclock>UTC</hwclock>
+    <timezone>America/New_York</timezone>
+  </timezone>
+  <user_defaults>
+    <expire/>
+    <group>100</group>
+    <groups/>
+    <home>/home</home>
+    <inactive>-1</inactive>
+    <no_groups config:type="boolean">true</no_groups>
+    <shell>/bin/bash</shell>
+    <skel>/etc/skel</skel>
+    <umask>022</umask>
+  </user_defaults>
+  <users config:type="list">
+    <user>
+      <encrypted config:type="boolean">true</encrypted>
+      <fullname>Games account</fullname>
+      <gid>100</gid>
+      <home>/var/games</home>
+      <password_settings>
+        <expire/>
+        <flag/>
+        <inact/>
+        <max/>
+        <min/>
+        <warn/>
+      </password_settings>
+      <shell>/bin/bash</shell>
+      <uid>12</uid>
+      <user_password>*</user_password>
+      <username>games</username>
+    </user>
+    <user>
+      <encrypted config:type="boolean">true</encrypted>
+      <fullname>openslp daemon</fullname>
+      <gid>2</gid>
+      <home>/var/lib/empty</home>
+      <password_settings>
+        <expire/>
+        <flag/>
+        <inact/>
+        <max/>
+        <min/>
+        <warn/>
+      </password_settings>
+      <shell>/sbin/nologin</shell>
+      <uid>494</uid>
+      <user_password>!</user_password>
+      <username>openslp</username>
+    </user>
+    <user>
+      <encrypted config:type="boolean">true</encrypted>
+      <fullname>Manual pages viewer</fullname>
+      <gid>62</gid>
+      <home>/var/cache/man</home>
+      <password_settings>
+        <expire/>
+        <flag/>
+        <inact/>
+        <max/>
+        <min/>
+        <warn/>
+      </password_settings>
+      <shell>/bin/bash</shell>
+      <uid>13</uid>
+      <user_password>*</user_password>
+      <username>man</username>
+    </user>
+    <user>
+      <encrypted config:type="boolean">true</encrypted>
+      <fullname>Printing daemon</fullname>
+      <gid>7</gid>
+      <home>/var/spool/lpd</home>
+      <password_settings>
+        <expire/>
+        <flag/>
+        <inact/>
+        <max/>
+        <min/>
+        <warn/>
+      </password_settings>
+      <shell>/bin/bash</shell>
+      <uid>4</uid>
+      <user_password>*</user_password>
+      <username>lp</username>
+    </user>
+    <user>
+      <encrypted config:type="boolean">true</encrypted>
+      <fullname>User for nscd</fullname>
+      <gid>495</gid>
+      <home>/run/nscd</home>
+      <password_settings>
+        <expire/>
+        <flag/>
+        <inact/>
+        <max/>
+        <min/>
+        <warn/>
+      </password_settings>
+      <shell>/sbin/nologin</shell>
+      <uid>496</uid>
+      <user_password>!</user_password>
+      <username>nscd</username>
+    </user>
+    <user>
+      <encrypted config:type="boolean">true</encrypted>
+      <fullname>Mailer daemon</fullname>
+      <gid>12</gid>
+      <home>/var/spool/clientmqueue</home>
+      <password_settings>
+        <expire/>
+        <flag/>
+        <inact/>
+        <max/>
+        <min/>
+        <warn/>
+      </password_settings>
+      <shell>/bin/false</shell>
+      <uid>8</uid>
+      <user_password>*</user_password>
+      <username>mail</username>
+    </user>
+    <user>
+      <encrypted config:type="boolean">true</encrypted>
+      <fullname>FTP account</fullname>
+      <gid>49</gid>
+      <home>/srv/ftp</home>
+      <password_settings>
+        <expire/>
+        <flag/>
+        <inact/>
+        <max/>
+        <min/>
+        <warn/>
+      </password_settings>
+      <shell>/bin/bash</shell>
+      <uid>40</uid>
+      <user_password>*</user_password>
+      <username>ftp</username>
+    </user>
+    <user>
+      <encrypted config:type="boolean">true</encrypted>
+      <fullname>bin</fullname>
+      <gid>1</gid>
+      <home>/bin</home>
+      <password_settings>
+        <expire/>
+        <flag/>
+        <inact/>
+        <max/>
+        <min/>
+        <warn/>
+      </password_settings>
+      <shell>/bin/bash</shell>
+      <uid>1</uid>
+      <user_password>*</user_password>
+      <username>bin</username>
+    </user>
+    <user>
+      <encrypted config:type="boolean">true</encrypted>
+      <fullname>nobody</fullname>
+      <gid>65533</gid>
+      <home>/var/lib/nobody</home>
+      <password_settings>
+        <expire/>
+        <flag/>
+        <inact/>
+        <max/>
+        <min/>
+        <warn/>
+      </password_settings>
+      <shell>/bin/bash</shell>
+      <uid>65534</uid>
+      <user_password>*</user_password>
+      <username>nobody</username>
+    </user>
+    <user>
+      <encrypted config:type="boolean">true</encrypted>
+      <fullname>SSH daemon</fullname>
+      <gid>498</gid>
+      <home>/var/lib/sshd</home>
+      <password_settings>
+        <expire/>
+        <flag/>
+        <inact/>
+        <max/>
+        <min/>
+        <warn/>
+      </password_settings>
+      <shell>/bin/false</shell>
+      <uid>498</uid>
+      <user_password>!</user_password>
+      <username>sshd</username>
+    </user>
+    <user>
+      <encrypted config:type="boolean">true</encrypted>
+      <fullname>News system</fullname>
+      <gid>13</gid>
+      <home>/etc/news</home>
+      <password_settings>
+        <expire/>
+        <flag/>
+        <inact/>
+        <max/>
+        <min/>
+        <warn/>
+      </password_settings>
+      <shell>/bin/bash</shell>
+      <uid>9</uid>
+      <user_password>*</user_password>
+      <username>news</username>
+    </user>
+    <user>
+      <encrypted config:type="boolean">true</encrypted>
+      <fullname>WWW daemon apache</fullname>
+      <gid>8</gid>
+      <home>/var/lib/wwwrun</home>
+      <password_settings>
+        <expire/>
+        <flag/>
+        <inact/>
+        <max/>
+        <min/>
+        <warn/>
+      </password_settings>
+      <shell>/bin/false</shell>
+      <uid>30</uid>
+      <user_password>*</user_password>
+      <username>wwwrun</username>
+    </user>
+    <user>
+      <encrypted config:type="boolean">true</encrypted>
+      <fullname>user for rpcbind</fullname>
+      <gid>65534</gid>
+      <home>/var/lib/empty</home>
+      <password_settings>
+        <expire/>
+        <flag/>
+        <inact/>
+        <max/>
+        <min/>
+        <warn/>
+      </password_settings>
+      <shell>/sbin/nologin</shell>
+      <uid>495</uid>
+      <user_password>!</user_password>
+      <username>rpc</username>
+    </user>
+    <user>
+      <encrypted config:type="boolean">true</encrypted>
+      <fullname>root</fullname>
+      <gid>0</gid>
+      <home>/root</home>
+      <password_settings>
+        <expire/>
+        <flag/>
+        <inact/>
+        <max/>
+        <min/>
+        <warn/>
+      </password_settings>
+      <shell>/bin/bash</shell>
+      <uid>0</uid>
+      <user_password>$6$bUrLH1Pyg5Qe$P7OihY8kjfKbsYk3ojbhqbSEHyFtO0odOVShq9yiZ3wLPuK11wJ4MybwfsiPKmOgUgi43gWoh6ODBzRNFZm8q.</user_password>
+      <username>root</username>
+    </user>
+    <user>
+      <encrypted config:type="boolean">true</encrypted>
+      <fullname>Daemon</fullname>
+      <gid>2</gid>
+      <home>/sbin</home>
+      <password_settings>
+        <expire/>
+        <flag/>
+        <inact/>
+        <max/>
+        <min/>
+        <warn/>
+      </password_settings>
+      <shell>/bin/bash</shell>
+      <uid>2</uid>
+      <user_password>*</user_password>
+      <username>daemon</username>
+    </user>
+    <user>
+      <encrypted config:type="boolean">true</encrypted>
+      <fullname>Unix-to-Unix CoPy system</fullname>
+      <gid>14</gid>
+      <home>/etc/uucp</home>
+      <password_settings>
+        <expire/>
+        <flag/>
+        <inact/>
+        <max/>
+        <min/>
+        <warn/>
+      </password_settings>
+      <shell>/bin/bash</shell>
+      <uid>10</uid>
+      <user_password>*</user_password>
+      <username>uucp</username>
+    </user>
+    <user>
+      <encrypted config:type="boolean">true</encrypted>
+      <fullname>User for polkitd</fullname>
+      <gid>496</gid>
+      <home>/var/lib/polkit</home>
+      <password_settings>
+        <expire/>
+        <flag/>
+        <inact/>
+        <max/>
+        <min/>
+        <warn/>
+      </password_settings>
+      <shell>/sbin/nologin</shell>
+      <uid>497</uid>
+      <user_password>!</user_password>
+      <username>polkitd</username>
+    </user>
+    <user>
+      <encrypted config:type="boolean">true</encrypted>
+      <fullname>User for D-Bus</fullname>
+      <gid>499</gid>
+      <home>/var/run/dbus</home>
+      <password_settings>
+        <expire/>
+        <flag/>
+        <inact/>
+        <max/>
+        <min/>
+        <warn/>
+      </password_settings>
+      <shell>/bin/false</shell>
+      <uid>499</uid>
+      <user_password>!</user_password>
+      <username>messagebus</username>
+    </user>
+  </users>
+</profile>
