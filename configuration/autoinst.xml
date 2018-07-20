@@ -1301,7 +1301,7 @@
       </password_settings>
       <shell>/bin/bash</shell>
       <uid>0</uid>
-      <user_password>$6$bUrLH1Pyg5Qe$P7OihY8kjfKbsYk3ojbhqbSEHyFtO0odOVShq9yiZ3wLPuK11wJ4MybwfsiPKmOgUgi43gWoh6ODBzRNFZm8q.</user_password>
+      <user_password></user_password>
       <username>root</username>
     </user>
     <user>
