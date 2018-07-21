@@ -109,7 +109,22 @@ Now, edit the `/var/lib/kerberos/krb5kdc/kadm5.acl` file to add the appropriate 
 */admin@TOLHARADYS.NET  *
 ```
 
-This setting configures the service to allow any principle that contains /admin at the end of it's name before the realm section has full rights to administer it.
+This setting configures the service to allow any principle that contains /admin at the end of it's name before the realm section to have full rights to administer it.
 
 With this out of the way, lets create an admin principle:
 
+```
+kadmin.local -q "addprinc admin/admin"
+```
+
+This creates a default administrative principle with full rights to add, modify, and remove kerberos principles and policies. Additionally, we need to create a service principle for working with the administrative service by doing the following, modifying accordingly for your Kerberos system's fully qualified hostname:
+
+```
+kadmin.local -q "addprinc -randkey kadmin/wotan.tolharadys.net"
+```
+
+Once this is created, restart the `kadmind` service to ensure it uses this principle for it's own authorization.
+
+```
+systemctl reload kadmind.service
+```
