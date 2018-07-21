@@ -44,3 +44,72 @@ To build a secure Open Directory replacement, we start with MIT's Kerberos v5 se
  - sssd-krb5
  - sssd-krb5-common
 ```
+
+#### Configuring the Krb5 General settings
+
+With the required packages installed, the host's configuration needs set to create the key database that will store the kerberos principles and keys. The first file to modify is `/etc/krb5.conf`. It should look something like this, but modified to reflect your realm's DNS domain:
+
+```
+[libdefaults]
+    default_realm = TOLHARADYS.NET
+    clockskew = 300
+    # "dns_canonicalize_hostname" and "rdns" are better set to false for improved security.
+    # If set to true, the canonicalization mechanism performed by Kerberos client may
+    # allow service impersonification, the consequence is similar to conducting TLS certificate
+    # verification without checking host name.
+    # If left unspecified, the two parameters will have default value true, which is less secure.
+    dns_canonicalize_hostname = false
+    rdns = false
+    dns_lookup_kdc = true
+    dns_lookup_realm = true
+    forwardable = true
+    proxiable = true
+
+[realms]
+    TOLHARADYS.NET = {
+        kdc = wotan.tolharadys.net
+        admin_server = wotan.tolharadys.net
+    }
+
+[domain_realm]
+    .tolharadys.net = TOLHARADYS.NET
+    tolharadys.net  = TOLHARADYS.NET
+
+[logging]
+    kdc = FILE:/var/log/krb5/krb5kdc.log
+    admin_server = FILE:/var/log/krb5/kadmind.log
+    default = SYSLOG:NOTICE:DAEMON
+
+[plugins]
+```
+
+With these settings, the server will allow for the normal 5 minute clock leeway for checking ticket requests, allow TGTs to be forwarded or proxied, and look up both the realm and kdcs in said realm via DNS SRV styled records. While I do manually set the kdc and admin server, and set the domain to realm mapping, In the long run, I'll be moving to using DNS for this.
+
+#### Create the Kerberos Database and Adjusting the `kdc.conf` File
+
+After setting up the /etc/krb5.conf, run the following command and follow the prompts:
+
+```
+kdb5_util create -s
+```
+
+After running this command, verify `/var/lib/kerberos/krb5kdc/kdc.conf`, in particular, the `key_stash_file` setting. This setting should look like this, reflecting your DNS realm:
+
+```
+key_stash_file = /var/lib/kerberos/krb5kdc/.k5.TOLHARADYS.NET
+```
+
+The other settings in the file should be fine as the defaults in the file. If however, you want to tailor the Krb5 services on your machine as you need, take a look at the (man page for kdc.conf)[http://web.mit.edu/kerberos/krb5-1.12/doc/admin/conf_files/kdc_conf.html].
+
+#### Setting Up the Administrative Accesses
+
+Now, edit the `/var/lib/kerberos/krb5kdc/kadm5.acl` file to add the appropriate administrative ACL on the kerberos service:
+
+```
+*/admin@TOLHARADYS.NET  *
+```
+
+This setting configures the service to allow any principle that contains /admin at the end of it's name before the realm section has full rights to administer it.
+
+With this out of the way, lets create an admin principle:
+
