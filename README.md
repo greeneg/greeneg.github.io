@@ -32,3 +32,15 @@ The site ```mirrors.vtti.vt.edu```, in Virginia, USA still seems to have a few o
 **NOTE:** This autoinst.xml has NO password set for the root user, allowing login with just the root username. Once install is finished, <u>after boot, please run `passwd` after logging into the `root` user account</u>.
 
 After this, I ran a series of distribution updates (42.1 -> 42.2 -> 42.3 -> 15.0) to get to having openSUSE Leap 15 running on the Mac Mini.
+
+### Step 2: Setting up MIT Kerberos
+
+To build a secure Open Directory replacement, we start with MIT's Kerberos v5 service. During the install of openSUSE, I've already installed the required packages:
+
+```
+ - krb5
+ - krb5-client
+ - krb5-server
+ - sssd-krb5
+ - sssd-krb5-common
+```
