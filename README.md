@@ -1,8 +1,8 @@
-# ./My Personal Site...
+# :My Personal Site:
 
 This site is my personal collection of howtos and ruminations. Anything I post here is either my opinion, or based off experiences building out opsn source tooling for personal infrastructure projects.
 
-## ./Goodbye macOS Server, You Served Me Well?
+## ::Goodbye macOS Server, You Served Me Well::
 
 **THIS ARTICLE IS A WORK IN PROGRESS! There are things that will change as I work out issues.**
 
@@ -191,4 +191,25 @@ Once this is created, restart the `kadmind` service to ensure it uses this princ
 
 ```
 systemctl reload kadmind.service
+```
+
+After restarting the `kadmind` service, we can work on creating the starting user accounts needed for the LDAP environment. To start, we should add a host principle to ensure that the host can request TGTs for users from the KDC. To do so, run the following command, modifying the FQDN in the principle with your KDC's hostname:
+
+```
+kadmin.local -q "addprinc -randkey host/wotan.tolharadys.net"
+```
+
+Now, this principle needs added to the host's `/etc/krb5.keytab`, replacing the FQDN, like above:
+
+```
+kadmin.local -q "ktadd -k /etc/krb5.keytab host/wotan.tolharadys.net"
+```
+
+At this point, we can create a service principle and keytab that the OpenLDAP slapd daemon will use for authorizing kerberized connections. To do so, run the following commands:
+
+```
+kadmin.local -q "addprinc -randkey ldap/wotan.tolharadys.net"
+kadmin.local -q "ktadd -k /etc/openldap/krb5.keytab ldap/wotan.tolharadys.net"
+chgrp ldap /etc/openldap/krb5.keytab.ldap
+chmod g+r /etc/openldap/krb5.keytab.ldap
 ```
