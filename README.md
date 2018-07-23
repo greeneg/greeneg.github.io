@@ -47,11 +47,41 @@ In previous distribution releases, openSUSE used the `ntpd` implementation from 
  - chrony
 ```
 
-#### Configuring Chrony
+#### Configuring Chrony - Server
 
-To configure Chrony, either we can use the `yast2 ntp-client` ncurses configuration tool, or modify the `/etc/chrony.conf` file directly. As this howto will eventually be scripted, we'll look at modifying the file directly.
+On a machine that will act as an NTP server that has had Chrony installed, we'll need to configure the installation to allow syncing from an upstream public server, and allowing local network hosts to sync against it. In my case, I chose to use my network's network management server that runs DNS, DHCP, and acts as the Shorewall firewall for my network to host this service. To configure Chrony, I've modified the `/etc/chrony.conf` file to fit my network's needs:
 
-Open `/etc/chrony.conf` and ensure it's content looks like so, but change the host that acts as your NTP master in the pool section:
+```
+# Use public servers from the pool.ntp.org project.
+# Please consider joining the pool (http://www.pool.ntp.org/join.html).
+pool 0.us.pool.ntp.org iburst
+pool 1.us.pool.ntp.org iburst
+pool 2.us.pool.ntp.org iburst
+pool 3.us.pool.ntp.org iburst
+
+# Record the rate at which the system clock gains/losses time.
+driftfile /var/lib/chrony/drift
+
+# Allow the system clock to be stepped in the first three updates
+# if its offset is larger than 1 second.
+makestep 1.0 3
+
+# Enable kernel synchronization of the real-time clock (RTC).
+rtcsync
+
+# Allow NTP client access from local network.
+allow 192.168.8.0/24
+
+# Specify directory for log files.
+logdir /var/log/chrony
+
+# Also include any directives found in configuration files in /etc/chrony.d
+include /etc/chrony.d/*.conf
+```
+
+#### Configuring Chrony - Client
+
+To configure Chrony, either we can use the `yast2 ntp-client` ncurses configuration tool, or modify the `/etc/chrony.conf` file directly, like so:
 
 ```
 # Use public servers from the pool.ntp.org project.
@@ -68,30 +98,8 @@ makestep 1.0 3
 # Enable kernel synchronization of the real-time clock (RTC).
 rtcsync
 
-# Enable hardware timestamping on all interfaces that support it.
-#hwtimestamp *
-
-# Increase the minimum number of selectable sources required to adjust
-# the system clock.
-#minsources 2
-
-# Allow NTP client access from local network.
-#allow 192.168.0.0/16
-
-# Serve time even if not synchronized to a time source.
-#local stratum 10
-
-# Specify file containing keys for NTP authentication.
-#keyfile /etc/chrony.keys
-
-# Get TAI-UTC offset and leap seconds from the system tz database.
-#leapsectz right/UTC
-
 # Specify directory for log files.
 logdir /var/log/chrony
-
-# Select which information is logged.
-#log measurements statistics tracking
 
 # Also include any directives found in configuration files in /etc/chrony.d
 include /etc/chrony.d/*.conf
