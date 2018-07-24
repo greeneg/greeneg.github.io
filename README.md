@@ -105,6 +105,11 @@ logdir /var/log/chrony
 include /etc/chrony.d/*.conf
 ```
 
+For further information about NTP, look [here](http://www.ntp.org), and for info on Chrony, see these man pages:
+- [chronyc](https://linux.die.net/man/1/chronyc)
+- [chronyd](https://linux.die.net/man/8/chronyd)
+- [chrony.conf](https://linux.die.net/man/5/chrony.conf)
+
 ### Step 3: Setting up MIT Kerberos
 
 To build a secure Open Directory replacement, we start with MIT's Kerberos v5 service. During the install of openSUSE, I've already installed the required packages:
@@ -244,6 +249,16 @@ Valid starting       Expires              Service principal
 07/19/2018 19:00:24  07/20/2018 05:00:24  krbtgt/TOLHARADYS.NET@TOLHARADYS.NET
     renew until 07/26/2018 19:00:24
 ```
+
+Further information on Kerberos v5 and the MIT implementation, specifically can be found on the links below:
+- [kadmin](https://linux.die.net/man/1/kadmin)
+- [kadmind](https://linux.die.net/man/8/kadmind)
+- [kdb5_util](https://linux.die.net/man/8/kdb5_util)
+- [klist](https://linux.die.net/man/1/klist)
+- [kinit](https://linux.die.net/man/1/kinit)
+- [krb5.conf](https://linux.die.net/man/5/krb5.conf)
+- [krb5kdc](https://linux.die.net/man/8/krb5kdc)
+- [MIT Kerberos v5 Documentation](http://web.mit.edu/kerberos/krb5-current/doc/)
 
 #### Installing OpenLDAP
 
