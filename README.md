@@ -201,6 +201,10 @@ Once this is created, restart the `kadmind` service to ensure it uses this princ
 systemctl reload kadmind.service
 ```
 
+### Step 4: Setting up OpenLDAP
+
+#### Configuring the Kerberos Authorization for LDAP
+
 After restarting the `kadmind` service, we can work on creating the starting user accounts needed for the LDAP environment. To start, we should add a host principle to ensure that the host can request TGTs for users from the KDC. To do so, run the following command, modifying the FQDN in the principle with your KDC's hostname:
 
 ```
@@ -218,6 +222,65 @@ At this point, we can create a service principle and keytab that the OpenLDAP sl
 ```
 kadmin.local -q "addprinc -randkey ldap/wotan.tolharadys.net"
 kadmin.local -q "ktadd -k /etc/openldap/krb5.keytab ldap/wotan.tolharadys.net"
-chgrp ldap /etc/openldap/krb5.keytab.ldap
-chmod g+r /etc/openldap/krb5.keytab.ldap
+chgrp ldap /etc/openldap/krb5.keytab
+chmod g+r /etc/openldap/krb5.keytab
 ```
+
+To validate the Kerberos portion of the configuration, run the following:
+
+```
+systemctl restart kadmind.service
+kinit diradmin/admin@TOLHARADYS.NET
+klist
+```
+
+This should complete without error, and display something like the following on your terminal:
+
+```
+Ticket cache: DIR::/run/user/0/krb5cc/tkt
+Default principal: diradmin/admin@TOLHARADYS.NET
+
+Valid starting       Expires              Service principal
+07/19/2018 19:00:24  07/20/2018 05:00:24  krbtgt/TOLHARADYS.NET@TOLHARADYS.NET
+    renew until 07/26/2018 19:00:24
+```
+
+#### Installing OpenLDAP
+
+The next step in replacing your Open Directory server is to install the Cyrus SASL authorization suite, the OpenLDAP suite of tools, and related tooling:
+
+```
+ - cyrus-sasl
+ - cyrus-sasl-gs2
+ - cyrus-sasl-gssapi
+ - cyrus-sasl-ldap-auxprop
+ - cyrus-sasl-ntlm
+ - cyrus-sasl-otp
+ - cyrus-sasl-plain
+ - cyrus-sasl-saslauthd
+ - cyrus-sasl-scram
+ - ldapvi
+ - openldap2
+ - openldap2-client
+ - openldap2-contrib
+ - openldap2-doc
+ - openldap2-ppolicy-check-password
+ - sssd-ldap
+ - sssd-proxy
+ - sssd-tools
+```
+
+#### Configuring OpenLDAP
+
+There are a number of files to modify for `slapd`, the LDAP daemon portion of OpenLDAP to work. Additionally, some of these files also govern the configuration of the local LDAP client tools we installed above.
+
+First, let's modify the `/etc/openldap/ldap.conf` so the tools know your LDAP directory name (modify appropriate for your environment):
+
+```
+BASE    dc=tolharadys,dc=net
+URI     ldap://localhost
+```
+
+We'll return to this file later to set up default GSSAPI and, if desired, TLS settings as we progress. But before then, let's get our LDAP schema in order.
+
+#### Obtain, Modify, and Configure Your OpenLDAP to Use Needed Schema
