@@ -325,8 +325,8 @@ The files above are in the tar.bzip2 linked from the site [here](https://github.
 To better understand the changes I've done, lets look at a diff from the Apple version of the apple.schema file and the one I've put in the tar bz2 ball, let's look at a diff:
 
 ```diff
---- /etc/openldap/schema/apple.schema   2018-06-09 03:29:58.000000000 -0400
-+++ ./schema/apple.schema2018-07-18 22:45:46.500811045 -0400
+--- /etc/openldap/schema/apple.schema 2018-06-09 03:29:58.000000000 -0400
++++ /etc/openldap/schema/apple.schema 2018-07-18 22:45:46.500811045 -0400
 @@ -6,12 +6,12 @@
  #
  # Container structural object class.
@@ -503,49 +503,154 @@ To better understand the changes I've done, lets look at a diff from the Apple v
  
  #
  # Apple User Info object 1.3.6.1.4.1.63.1000.1.1.2.27
-greeneg@sif:website/configuration > $ diff -urN /etc/openldap/schema/apple.schema ./schema/apple.schema | less
+```
 
--            MAY description )
-+# attributetype (
-+#                      1.3.6.1.1.1.1.31 
-+#                      NAME 'automountMapName'
-+#            DESC 'automount Map Name'
-+#            EQUALITY caseExactMatch
-+#            SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
-+#            SINGLE-VALUE )
-+
-+# attributetype (
-+#                      1.3.6.1.1.1.1.32 
-+#                      NAME 'automountKey'
-+#            DESC 'Automount Key value'
-+#            EQUALITY caseExactMatch
-+#            SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
-+#            SINGLE-VALUE )
-+
-+# attributetype ( 
-+#                      1.3.6.1.1.1.1.33 
-+#                      NAME 'automountInformation'
-+#            DESC 'Automount information'
-+#            EQUALITY caseExactMatch
-+#            SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
-+#            SINGLE-VALUE )
-+
-+# objectclass ( 
-+#                      1.3.6.1.1.1.2.16 
-+#                      NAME 'automountMap' 
-+#                      SUP top STRUCTURAL
-+#            MUST ( automountMapName )
-+#            MAY description )
-+
-+# objectclass ( 
-+#                      1.3.6.1.1.1.2.17 
-+#                      NAME 'automount' 
-+#                      SUP top STRUCTURAL
-+#            DESC 'Automount'
-+#            MUST ( automountKey $ automountInformation )
-+#            MAY description )
+As can be seen, many of the changes are to comment out the AutoFS entries, which are provided by the rfc2307bis schema; uncomment the container objectclass, as this is required for conformance to how Open Directory is structured for the Workgroup Manager or other tools to work correctly; and move the `authAuthority` attribute definitions near the top of the schema.
+
+Next we modified the samba3 schema to bring back a couple of legacy entries that the Apple schema required:
+
+```diff
+--- /etc/openldap/schema/samba3.schema 2018-05-14 19:05:11.000000000 -0400
++++ /etc/openldap/schema/samba3.schema 2018-07-18 22:39:18.751534299 -0400
+@@ -71,33 +71,33 @@
+ ##
+ ## Account flags in string format ([UWDX     ])
+ ##
+-#attributetype ( 1.3.6.1.4.1.7165.2.1.4 NAME 'acctFlags'
+-#DESC 'Account Flags'
+-#EQUALITY caseIgnoreIA5Match
+-#SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{16} SINGLE-VALUE )
++attributetype ( 1.3.6.1.4.1.7165.2.1.4 NAME 'acctFlags'
++DESC 'Account Flags'
++EQUALITY caseIgnoreIA5Match
++SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{16} SINGLE-VALUE )
  
- #
- # Apple User Info object 1.3.6.1.4.1.63.1000.1.1.2.27
+ ##
+ ## Password timestamps & policies
+ ##
+-#attributetype ( 1.3.6.1.4.1.7165.2.1.3 NAME 'pwdLastSet'
+-#DESC 'NT pwdLastSet'
+-#EQUALITY integerMatch
+-#SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
+-
+-#attributetype ( 1.3.6.1.4.1.7165.2.1.5 NAME 'logonTime'
+-#DESC 'NT logonTime'
+-#EQUALITY integerMatch
+-#SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
+-
+-#attributetype ( 1.3.6.1.4.1.7165.2.1.6 NAME 'logoffTime'
+-#DESC 'NT logoffTime'
+-#EQUALITY integerMatch
+-#SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
+-
+-#attributetype ( 1.3.6.1.4.1.7165.2.1.7 NAME 'kickoffTime'
+-#DESC 'NT kickoffTime'
+-#EQUALITY integerMatch
+-#SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
++attributetype ( 1.3.6.1.4.1.7165.2.1.3 NAME 'pwdLastSet'
++DESC 'NT pwdLastSet'
++EQUALITY integerMatch
++SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
++
++attributetype ( 1.3.6.1.4.1.7165.2.1.5 NAME 'logonTime'
++DESC 'NT logonTime'
++EQUALITY integerMatch
++SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
++
++attributetype ( 1.3.6.1.4.1.7165.2.1.6 NAME 'logoffTime'
++DESC 'NT logoffTime'
++EQUALITY integerMatch
++SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
++
++attributetype ( 1.3.6.1.4.1.7165.2.1.7 NAME 'kickoffTime'
++DESC 'NT kickoffTime'
++EQUALITY integerMatch
++SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
+ 
+ #attributetype ( 1.3.6.1.4.1.7165.2.1.8 NAME 'pwdCanChange'
+ #DESC 'NT pwdCanChange'
+@@ -112,30 +112,30 @@
+ ##
+ ## string settings
+ ##
+-#attributetype ( 1.3.6.1.4.1.7165.2.1.10 NAME 'homeDrive'
+-#DESC 'NT homeDrive'
+-#EQUALITY caseIgnoreIA5Match
+-#SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{4} SINGLE-VALUE )
+-
+-#attributetype ( 1.3.6.1.4.1.7165.2.1.11 NAME 'scriptPath'
+-#DESC 'NT scriptPath'
+-#EQUALITY caseIgnoreIA5Match
+-#SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{255} SINGLE-VALUE )
+-
+-#attributetype ( 1.3.6.1.4.1.7165.2.1.12 NAME 'profilePath'
+-#DESC 'NT profilePath'
+-#EQUALITY caseIgnoreIA5Match
+-#SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{255} SINGLE-VALUE )
+-
+-#attributetype ( 1.3.6.1.4.1.7165.2.1.13 NAME 'userWorkstations'
+-#DESC 'userWorkstations'
+-#EQUALITY caseIgnoreIA5Match
+-#SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{255} SINGLE-VALUE )
+-
+-#attributetype ( 1.3.6.1.4.1.7165.2.1.17 NAME 'smbHome'
+-#DESC 'smbHome'
+-#EQUALITY caseIgnoreIA5Match
+-#SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{128} )
++attributetype ( 1.3.6.1.4.1.7165.2.1.10 NAME 'homeDrive'
++DESC 'NT homeDrive'
++EQUALITY caseIgnoreIA5Match
++SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{4} SINGLE-VALUE )
++
++attributetype ( 1.3.6.1.4.1.7165.2.1.11 NAME 'scriptPath'
++DESC 'NT scriptPath'
++EQUALITY caseIgnoreIA5Match
++SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{255} SINGLE-VALUE )
++
++attributetype ( 1.3.6.1.4.1.7165.2.1.12 NAME 'profilePath'
++DESC 'NT profilePath'
++EQUALITY caseIgnoreIA5Match
++SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{255} SINGLE-VALUE )
++
++attributetype ( 1.3.6.1.4.1.7165.2.1.13 NAME 'userWorkstations'
++DESC 'userWorkstations'
++EQUALITY caseIgnoreIA5Match
++SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{255} SINGLE-VALUE )
++
++attributetype ( 1.3.6.1.4.1.7165.2.1.17 NAME 'smbHome'
++DESC 'smbHome'
++EQUALITY caseIgnoreIA5Match
++SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{128} )
+ 
+ #attributetype ( 1.3.6.1.4.1.7165.2.1.18 NAME 'domain'
+ #DESC 'Windows NT domain to which the user belongs'
+@@ -145,15 +145,15 @@
+ ##
+ ## user and group RID
+ ##
+-#attributetype ( 1.3.6.1.4.1.7165.2.1.14 NAME 'rid'
+-#DESC 'NT rid'
+-#EQUALITY integerMatch
+-#SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
+-
+-#attributetype ( 1.3.6.1.4.1.7165.2.1.15 NAME 'primaryGroupID'
+-#DESC 'NT Group RID'
+-#EQUALITY integerMatch
+-#SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
++attributetype ( 1.3.6.1.4.1.7165.2.1.14 NAME 'rid'
++DESC 'NT rid'
++EQUALITY integerMatch
++SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
++
++attributetype ( 1.3.6.1.4.1.7165.2.1.15 NAME 'primaryGroupID'
++DESC 'NT Group RID'
++EQUALITY integerMatch
++SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
+ 
+ ##
+ ## The smbPasswordEntry objectclass has been depreciated in favor of the
 
 ```
+
+These changes were to reenable several attributes that had been available in earlier Samba versions, and are currently viewed as historical. These attributes are required by the Apple schema's objectclasses.
+
