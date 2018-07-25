@@ -299,3 +299,25 @@ URI     ldap://localhost
 We'll return to this file later to set up default GSSAPI and, if desired, TLS settings as we progress. But before then, let's get our LDAP schema in order.
 
 #### Obtain, Modify, and Configure Your OpenLDAP to Use Needed Schema
+
+Under the hood, most directory services are a mix of LDAP and Kerberos, with a mix of extra tooling to add features to differentiate one from the other, like group policy, or key management. In most of these cases, vendors of directory service solutions have created or modified the base LDAP schemas to meet their needs. In Apple's case, they chose to augment the base [RFC2307bis schema](https://tools.ietf.org/html/draft-howard-rfc2307bis-02) to add support for fields that once NetInfo provided, and some compatibility elements from Microsoft's Active Directory schema.
+
+In addition, I've chosen to add support for other Linux related services to the directory service we're building. The list of schema, at this time, we'll be working with follows:
+
+```
+ - core
+ - cosine
+ - inetorgperson
+ - openldap
+ - rfc2307bis
+ - apple_auxillary
+ - samba3
+ - apple
+ - sudo
+ - openssh-lpk
+ - yast
+```
+
+The schema files from Apple are unfortunately not marked directly with a license. However, they _ARE_ available off their open source site online, so I'm going to assume (at least until I get a cease and desist) that their schemas are free to redistribute.
+
+The files above are in the tar.bzip2 linked from the site [here](https://github.com/greeneg/website/blob/master/configuration/ldap_schema.tar.bz2).
