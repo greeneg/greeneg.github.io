@@ -654,3 +654,52 @@ Next we modified the samba3 schema to bring back a couple of legacy entries that
 
 These changes were to reenable several attributes that had been available in earlier Samba versions, and are currently viewed as historical. These attributes are required by the Apple schema's objectclasses.
 
+After downloading the collection of schema to your Linux host, move it to `/etc/openldap/`. After this, remove the existing schema directory on your machine, then unpack them from the tar.bz2 file, like so:
+
+```shell
+cd /etc/openldap
+rm -rf schema
+tar xvf ldap_schema.tar.bz2
+```
+
+Now that the schema are in place, let's start updating our `/etc/openldap/slapd.conf` to allow them to be used. Open the file with your favourite editor and register the schema files in it by modifying the schema include section, like so:
+
+```
+include /etc/openldap/schema/core.schema
+include /etc/openldap/schema/cosine.schema
+include /etc/openldap/schema/inetorgperson.schema
+include /etc/openldap/schema/openldap.schema
+include /etc/openldap/schema/rfc2307bis.schema
+include /etc/openldap/schema/apple_auxillary.schema
+include /etc/openldap/schema/samba3.schema
+include /etc/openldap/schema/apple.schema
+include /etc/openldap/schema/sudo.schema
+include /etc/openldap/schema/openssh-lpk.schema
+include /etc/openldap/schema/yast.schema
+```
+
+**NOTE:** The order of schema is VERY important, as some are dependent on earlier ones, so please be mindful of the entries that you add!
+
+#### Setting the DB Type
+
+OpenLDAP has a number of storage backends, from flat files to Berkeley DB to shell or Perl interpreter backends. These allow it to be very flexible. In our case, we're using the MDB backend, which is the current recommended default by the OpenLDAP upstream developers. To enable it, in the module path section, load it's backend:
+
+```
+# Load backend modules such as databas engines
+modulepath /usr/lib64/openldap
+moduleload back_mdb.la
+```
+
+#### SASL Mappings
+
+By default, OpenLDAP uses the Distinguished Name of a person to find them in the database, however, when using SASL mechanisms, such as Kerberos via GSSAPI, the request does not come in the same way that OpenLDAP expects it. To map this, we use the `authz-regexp` directive to map users and computers to the appropriate place in the LDAP tree. To make this work, add the following lines to your slapd.conf:
+
+```
+# authz replace to allow mapping from SASL mechs to LDAP users
+authz-regexp uid=host/([^,]*),cn=.*,cn=gssapi,cn=auth "uid=$1,cn=computers,dc=tolharadys,dc=net"
+authz-regexp uid=([^/]*)(/[^,]*|),cn=.*,cn=.*,cn=auth "uid=$1,cn=users,dc=tolharadys,dc=net"
+authz-regexp uid=([^/]*)(/[^,]*|),cn=.*,cn=auth "uid=$1,cn=users,dc=tolharadys,dc=net"
+```
+
+#### Access Controls
+
