@@ -320,4 +320,232 @@ In addition, I've chosen to add support for other Linux related services to the 
 
 The schema files from Apple are unfortunately not marked directly with a license. However, they _ARE_ available off their open source site online, so I'm going to assume (at least until I get a cease and desist) that their schemas are free to redistribute.
 
-The files above are in the tar.bzip2 linked from the site [here](https://github.com/greeneg/greeneg.github.io/blob/master/configuration/ldap_schema.tar.bz2?raw=true). Just for clarity, there are more schema in that tar.bz2 ball than what we'll be dealing with 
+The files above are in the tar.bzip2 linked from the site [here](https://github.com/greeneg/greeneg.github.io/blob/master/configuration/ldap_schema.tar.bz2?raw=true). Just for clarity, there are more schema in that tar.bz2 ball than what we'll be dealing with. In addition, there are a few changes to the Apple supplied schema to deal with parsing errors and correctness to allow slaptest generate LDIF output for the in-database configuration system.
+
+To better understand the changes I've done, lets look at a diff from the Apple version of the apple.schema file and the one I've put in the tar bz2 ball, let's look at a diff:
+
+```diff
+--- /etc/openldap/schema/apple.schema   2018-06-09 03:29:58.000000000 -0400
++++ ./schema/apple.schema2018-07-18 22:45:46.500811045 -0400
+@@ -6,12 +6,12 @@
+ #
+ # Container structural object class.
+ #
+-#objectclass (
+-#1.2.840.113556.1.3.23
+-#NAME 'container'
+-#SUP top
+-#STRUCTURAL
+-#MUST ( cn ) )
++objectclass (
++1.2.840.113556.1.3.23
++NAME 'container'
++SUP top
++STRUCTURAL
++MUST ( cn ) )
+ 
+ #
+ # Time to live
+@@ -31,6 +31,25 @@
+ MAY ( ttl ) )
+ 
+ #
++# Authentication authority attribute 1.3.6.1.4.1.63.1000.1.1.2.16.1
++#
++attributetype (
++1.3.6.1.4.1.63.1000.1.1.2.16.1
++NAME 'authAuthority'
++DESC 'password server authentication authority'
++EQUALITY caseExactIA5Match
++SUBSTR caseExactIA5SubstringsMatch
++SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
++
++#attributetype (
++#1.3.6.1.4.1.63.1000.1.1.2.16.2
++#NAME ( 'authAuthority' 'authAuthority2' )
++#DESC 'password server authentication authority'
++#EQUALITY caseExactMatch
++#SUBSTR caseExactSubstringsMatch
++#SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
++
++#
+ # User attributes 1.3.6.1.4.1.63.1000.1.1.1.1
+ #
+ attributetype (
+@@ -80,6 +99,7 @@
+ #EQUALITY caseExactMatch
+ #SUBSTR caseExactSubstringsMatch
+ #SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 SINGLE-VALUE )
++
+ attributetype (
+ 1.3.6.1.4.1.63.1000.1.1.1.1.16
+ NAME ( 'apple-mcxsettings' 'apple-mcxsettings2' )
+@@ -312,10 +332,9 @@
+ 
+ attributetype ( 
+ 1.3.6.1.4.1.63.1000.1.1.1.1.41
+-  NAME 'lastFailedLoginTime'
+-  EQUALITY generalizedTimeMatch
+-  SYNTAX '1.3.6.1.4.1.1466.115.121.1.24'
+-  SINGLE-VALUE )
++NAME 'lastFailedLoginTime'
++EQUALITY generalizedTimeMatch
++SYNTAX '1.3.6.1.4.1.1466.115.121.1.24' SINGLE-VALUE )
+ 
+ attributetype (
+ 1.3.6.1.4.1.63.1000.1.1.1.1.42
+@@ -1142,25 +1161,6 @@
+       apple-serviceslocator ) )
+ 
+ #
+-# Authentication authority attribute 1.3.6.1.4.1.63.1000.1.1.2.16.1
+-#
+-#attributetype (
+-#1.3.6.1.4.1.63.1000.1.1.2.16.1
+-#NAME 'authAuthority'
+-#DESC 'password server authentication authority'
+-#EQUALITY caseExactIA5Match
+-#SUBSTR caseExactIA5SubstringsMatch
+-#SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+-
+-#attributetype (
+-#1.3.6.1.4.1.63.1000.1.1.2.16.2
+-#NAME ( 'authAuthority' 'authAuthority2' )
+-#DESC 'password server authentication authority'
+-#EQUALITY caseExactMatch
+-#SUBSTR caseExactSubstringsMatch
+-#SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+-
+-#
+ # Authentication authority object 1.3.6.1.4.1.63.1000.1.1.2.16
+ #
+ objectclass (
+@@ -1404,44 +1404,44 @@
+         STRUCTURAL
+         MUST ( cn ) )
+ 
+-attributetype ( 
+-1.3.6.1.1.1.1.31 
+-NAME 'automountMapName'
+-            DESC 'automount Map Name'
+-            EQUALITY caseExactMatch
+-            SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+-            SINGLE-VALUE )
+-
+-attributetype ( 
+-1.3.6.1.1.1.1.32 
+-NAME 'automountKey'
+-            DESC 'Automount Key value'
+-            EQUALITY caseExactMatch
+-            SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+-            SINGLE-VALUE )
+-
+-attributetype ( 
+-1.3.6.1.1.1.1.33 
+-NAME 'automountInformation'
+-            DESC 'Automount information'
+-            EQUALITY caseExactMatch
+-            SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+-            SINGLE-VALUE )
+-
+-objectclass ( 
+-1.3.6.1.1.1.2.16 
+-NAME 'automountMap' 
+-SUP top STRUCTURAL
+-            MUST ( automountMapName )
+-            MAY description )
+-
+-objectclass ( 
+-1.3.6.1.1.1.2.17 
+-NAME 'automount' 
+-SUP top STRUCTURAL
+-            DESC 'Automount'
+-            MUST ( automountKey $ automountInformation )
+-            MAY description )
++# attributetype (
++#1.3.6.1.1.1.1.31 
++#NAME 'automountMapName'
++#            DESC 'automount Map Name'
++#            EQUALITY caseExactMatch
++#            SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
++#            SINGLE-VALUE )
++
++# attributetype (
++#1.3.6.1.1.1.1.32 
++#NAME 'automountKey'
++#            DESC 'Automount Key value'
++#            EQUALITY caseExactMatch
++#            SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
++#            SINGLE-VALUE )
++
++# attributetype ( 
++#1.3.6.1.1.1.1.33 
++#NAME 'automountInformation'
++#            DESC 'Automount information'
++#            EQUALITY caseExactMatch
++#            SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
++#            SINGLE-VALUE )
++
++# objectclass ( 
++#1.3.6.1.1.1.2.16 
++#NAME 'automountMap' 
++#SUP top STRUCTURAL
++#            MUST ( automountMapName )
++#            MAY description )
++
++# objectclass ( 
++#1.3.6.1.1.1.2.17 
++#NAME 'automount' 
++#SUP top STRUCTURAL
++#            DESC 'Automount'
++#            MUST ( automountKey $ automountInformation )
++#            MAY description )
+ 
+ #
+ # Apple User Info object 1.3.6.1.4.1.63.1000.1.1.2.27
+greeneg@sif:website/configuration > $ diff -urN /etc/openldap/schema/apple.schema ./schema/apple.schema | less
+
+-            MAY description )
++# attributetype (
++#                      1.3.6.1.1.1.1.31 
++#                      NAME 'automountMapName'
++#            DESC 'automount Map Name'
++#            EQUALITY caseExactMatch
++#            SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
++#            SINGLE-VALUE )
++
++# attributetype (
++#                      1.3.6.1.1.1.1.32 
++#                      NAME 'automountKey'
++#            DESC 'Automount Key value'
++#            EQUALITY caseExactMatch
++#            SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
++#            SINGLE-VALUE )
++
++# attributetype ( 
++#                      1.3.6.1.1.1.1.33 
++#                      NAME 'automountInformation'
++#            DESC 'Automount information'
++#            EQUALITY caseExactMatch
++#            SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
++#            SINGLE-VALUE )
++
++# objectclass ( 
++#                      1.3.6.1.1.1.2.16 
++#                      NAME 'automountMap' 
++#                      SUP top STRUCTURAL
++#            MUST ( automountMapName )
++#            MAY description )
++
++# objectclass ( 
++#                      1.3.6.1.1.1.2.17 
++#                      NAME 'automount' 
++#                      SUP top STRUCTURAL
++#            DESC 'Automount'
++#            MUST ( automountKey $ automountInformation )
++#            MAY description )
+ 
+ #
+ # Apple User Info object 1.3.6.1.4.1.63.1000.1.1.2.27
+
+```
