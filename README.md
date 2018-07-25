@@ -320,4 +320,4 @@ In addition, I've chosen to add support for other Linux related services to the 
 
 The schema files from Apple are unfortunately not marked directly with a license. However, they _ARE_ available off their open source site online, so I'm going to assume (at least until I get a cease and desist) that their schemas are free to redistribute.
 
-The files above are in the tar.bzip2 linked from the site [here](https://github.com/greeneg/website/blob/master/configuration/ldap_schema.tar.bz2).
+The files above are in the tar.bzip2 linked from the site [here](https://github.com/greeneg/greeneg.github.io/blob/master/configuration/ldap_schema.tar.bz2?raw=true). Just for clarity, there are more schema in that tar.bz2 ball than what we'll be dealing with 
