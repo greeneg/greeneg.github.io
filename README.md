@@ -703,3 +703,61 @@ authz-regexp uid=([^/]*)(/[^,]*|),cn=.*,cn=auth "uid=$1,cn=users,dc=tolharadys,d
 
 #### Access Controls
 
+The next section is critical in securing your LDAP installation. The access controls to the data in your LDAP should be carefully considered, as certain attributes and Distinguished Names should be controlled both for read and write. The following Access Controls match up with the ones used in macOS Server, which should give reasonable security over the data.
+
+In later updates, we may review these entries and expand them to protect new fields as we expand the LDAP to incorporate more services in our network.
+
+To control access, we need to add `access` directives in `/etc/openldap/slapd.conf` with the appropriate rights associated with whom can do specific actions. To protect your Linux Open Directory data, add the following lines to slapd.conf:
+
+```
+# Very important: define ACL to authorise client access
+access to attrs=userPassword,shadowLastChange,userPKCS12
+        by dn="cn=admin,dc=tolharadys,dc=net" write
+        by dn="uid=diradmin,cn=users,dc=tolharadys,dc=net" write
+        by anonymous auth
+        by self write
+        by * none
+
+access to dn.base=""
+        by dn="cn=admin,dc=tolharadys,dc=net" write
+        by dn="uid=diradmin,cn=users,dc=tolharadys,dc=net" write
+        by * read
+
+access to *
+        by dn="cn=admin,dc=tolharadys,dc=net" write
+        by dn="uid=diradmin,cn=users,dc=tolharadys,dc=net" write
+        by * read
+
+access to dn.base="cn=Subschema"
+        by * read
+```
+
+These default Access Controls allow the rootdn (cn=admin) and the Directory Admin (uid=diradmin) write to the userPassword, shadowLastChange, and userPCKS12 attributes, plus write to all sections of the LDAP tree, except the cn=Subschema section of the tree. Additionally, any user may modify the userPassword, shadowLastChange, and userPCKS12 attributes of their own record. Anyone else only has read-only access.
+
+Eventually, we might put stronger controls around the attributes for SSH keys, user certificates (other than userPCKS12), and allow other attributes to be modified by their respective owners.
+
+#### Defining the LDAP Database
+
+The next part in the `/etc/openldap/slapd.conf` file we'll be looking at for now is defining the actual LDAP database that will hold the data that will be presented when an LDAP query is sent to the server.
+
+As the OpenLDAP project is moving to use the MDB database type as the default, we'll set that as the database type. Next, we'll set the root suffix, which sets our base distinguished name for the LDAP, which is typically your DNS domain. After this, we'll define our LDAP's rootdn, which is the core administrative user to the LDAP tree. As the administrative distinguished name is sensitive, it needs a secure password defined, which should be encrypted while in the local configuration file on the disk, and inside the LDAP tree itself to protect against malicious users that somehow manage to breach the system from gaining accesses they shouldn't have. Additionally, we will set the directory where the database should reside. Finally, adding some indexes to the database to allow for rapid queries of the data.
+
+To set these settings, add the following into your `/etc/openldap/slapd.conf`:
+
+```
+# Define a LDAP database
+database     mdb
+suffix       "dc=tolharadys,dc=net"
+rootdn       "cn=admin,dc=tolharadys,dc=net"
+# Please avoid using clear text for root password
+# See slappasswd(8) for instructions on creating a salted+hashed password
+#
+# NOTE: the entry below is NOT valid. Please set this using the slapppasswd
+# tool.
+rootpw       {SSHA}xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+# The database directory must exist prior to the start of OpenLDAP daemon
+# The directory should be owned by ldap user and permission 0700 is recommended
+directory    /var/lib/ldap
+# Indices to maintain
+index        objectClass eq
+```
