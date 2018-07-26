@@ -558,3 +558,10 @@ kadmin.local -q "addprinc diradmin/admin"
 ### Base LDAP Structure
 
 
+---
+
+## Navigation
+
+* [Home](https://greeneg.github.io)
+* [Previous Step => Setting up MIT Kerberos v5](setup_mit_krb5.md)
+

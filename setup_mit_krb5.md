@@ -148,4 +148,10 @@ Further information on Kerberos v5 and the MIT implementation, specifically can 
 - [krb5kdc](https://linux.die.net/man/8/krb5kdc)
 - [MIT Kerberos v5 Documentation](http://web.mit.edu/kerberos/krb5-current/doc/)
 
-* [Next Step => Setting up OpenLDAP](./setup_openldap.md)
+---
+
+## Navigation
+
+* [Home](https://greeneg.github.io)
+* [Previous Step => Setting up NTP for Your Network](setup_ntp.md)
+* [Next Step => Setting up OpenLDAP](setup_openldap.md)

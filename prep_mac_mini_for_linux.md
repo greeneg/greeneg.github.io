@@ -15,7 +15,11 @@ OK, first, Apple doesn't really intend you to install other operating systems on
 5. Change to /mnt/EFI and then rename the BOOT directory OLD
 6. Using ```parted```, remove the macOS HFS+ partition
 
-
 Now that these steps have been completed, reboot into the normal installation environment from the openSUSE DVD or Net-Inst CDROM.
 
-* [Next Step => Installing openSUSE Leap 15](./install_opensuse_leap_15.md).
+---
+
+## Navigation:
+
+* [Home](https://greeneg.github.io/)
+* [Next Step => Installing openSUSE Leap 15](install_opensuse_leap_15.md)

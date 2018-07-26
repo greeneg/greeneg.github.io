@@ -15,4 +15,10 @@ After this, I ran a series of distribution updates (42.1 -> 42.2 -> 42.3 -> 15.0
 * [openSUSE Documentation](https://doc.opensuse.org)
 * [openSUSE Support](https://en.opensuse.org/Portal:Support)
 
-* [Next Step => Setting up an NTP Service for Your Network](./setup_ntp.md)
+---
+
+## Navigation:
+
+* [Home](https://greeneg.github.io)
+* [Previous Step => Prep the Mac Mini for Linux](prep_mac_mini_for_linux.md)
+* [Next Step => Setting up an NTP Service for Your Network](setup_ntp.md)
