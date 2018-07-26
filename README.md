@@ -12,8 +12,8 @@ This left me in a bit of a cunnundrum, since my home network has a few Macs and 
 
 As this process is a pretty lengthy process, I've opted to split it into a few different pages.
 
- * [Step 0: Prep the Mac Mini for Linux](./prep_mac_mini_for_Linux.md)
- * [Step 1: Install openSUSE Leap 15](./install_opensuse_leap_15.md)
- * [Step 2: Setting up an NTP Service for Your Network](./setup_ntp.md)
- * [Step 3: Setting up MIT Kerberos](./setup_mit_krb5.md)
- * [Step 4: Setting up OpenLDAP](./setup_openldap.md)
+ * [Step 0: Prep the Mac Mini for Linux](prep_mac_mini_for_Linux.md)
+ * [Step 1: Install openSUSE Leap 15](install_opensuse_leap_15.md)
+ * [Step 2: Setting up an NTP Service for Your Network](setup_ntp.md)
+ * [Step 3: Setting up MIT Kerberos](setup_mit_krb5.md)
+ * [Step 4: Setting up OpenLDAP](setup_openldap.md)
