@@ -166,7 +166,7 @@ With these settings, the server will allow for the normal 5 minute clock leeway 
 
 After setting up the /etc/krb5.conf, run the following command and follow the prompts:
 
-```
+```shell
 kdb5_util create -s
 ```
 
@@ -190,19 +190,19 @@ This setting configures the service to allow any principle that contains /admin 
 
 With this out of the way, lets create an admin principle:
 
-```
+```shell
 kadmin.local -q "addprinc admin/admin"
 ```
 
 This creates a default administrative principle with full rights to add, modify, and remove kerberos principles and policies. Additionally, we need to create a service principle for working with the administrative service by doing the following, modifying accordingly for your Kerberos system's fully qualified hostname:
 
-```
+```shell
 kadmin.local -q "addprinc -randkey kadmin/wotan.tolharadys.net"
 ```
 
 Once this is created, restart the `kadmind` service to ensure it uses this principle for it's own authorization.
 
-```
+```shell
 systemctl reload kadmind.service
 ```
 
@@ -212,19 +212,19 @@ systemctl reload kadmind.service
 
 After restarting the `kadmind` service, we can work on creating the starting user accounts needed for the LDAP environment. To start, we should add a host principle to ensure that the host can request TGTs for users from the KDC. To do so, run the following command, modifying the FQDN in the principle with your KDC's hostname:
 
-```
+```shell
 kadmin.local -q "addprinc -randkey host/wotan.tolharadys.net"
 ```
 
 Now, this principle needs added to the host's `/etc/krb5.keytab`, replacing the FQDN, like above:
 
-```
+```shell
 kadmin.local -q "ktadd -k /etc/krb5.keytab host/wotan.tolharadys.net"
 ```
 
 At this point, we can create a service principle and keytab that the OpenLDAP slapd daemon will use for authorizing kerberized connections. To do so, run the following commands:
 
-```
+```shell
 kadmin.local -q "addprinc -randkey ldap/wotan.tolharadys.net"
 kadmin.local -q "ktadd -k /etc/openldap/krb5.keytab ldap/wotan.tolharadys.net"
 chgrp ldap /etc/openldap/krb5.keytab
@@ -233,9 +233,9 @@ chmod g+r /etc/openldap/krb5.keytab
 
 To validate the Kerberos portion of the configuration, run the following:
 
-```
+```shell
 systemctl restart kadmind.service
-kinit diradmin/admin@TOLHARADYS.NET
+kinit admin/admin@TOLHARADYS.NET
 klist
 ```
 
@@ -243,7 +243,7 @@ This should complete without error, and display something like the following on 
 
 ```
 Ticket cache: DIR::/run/user/0/krb5cc/tkt
-Default principal: diradmin/admin@TOLHARADYS.NET
+Default principal: admin/admin@TOLHARADYS.NET
 
 Valid starting       Expires              Service principal
 07/19/2018 19:00:24  07/20/2018 05:00:24  krbtgt/TOLHARADYS.NET@TOLHARADYS.NET
@@ -760,4 +760,37 @@ rootpw       {SSHA}xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 directory    /var/lib/ldap
 # Indices to maintain
 index        objectClass eq
+```
+
+#### Allowing OpenLDAP to Use Krb5 for Authorisation
+
+To allow slapd to be aware of the krb5.keytab we installed into `/etc/openldap`, we need to export an environment variable that lists where the keytab file is located during it's service startup. On openSUSE, this is set in the `/etc/sysconfig/openldap` file. To set this, change the OPENLDAP_KRB5_KEYTAB variable in the file like so:
+
+```
+OPENLDAP_KRB5_KEYTAB="FILE:/etc/openldap/krb5.keytab"
+```
+
+#### Testing
+
+To validate that OpenLDAP is configured to allow LDAP services to work, ensure that `slapd` is not running, and then run the following command:
+
+```shell
+slapd -d 1 -g openldap -u openldap -F /etc/ldap/slapd.d/
+```
+
+If no errors appear, it should start correctly and wait dilligently for queries to service. From another terminal, run `kinit diradmin/admin` to authenticate to the kerberos service and then run `ldapsearch` to finally test that queries are being serviced correctly. If you see errors like the following:
+
+```
+SASL/GSSAPI authentication started
+ldap_sasl_interactive_bind_s: Other (e.g., implementation specific) error (80)
+```
+
+This can indicate problems with either read access to the LDAP krb5.keytab, or clock skew that should have been addressed by the NTP client configuration earlier.
+
+#### Creating the Directory Administrator Kerberos principle
+
+Open Directory's normal administrative user is the Directory Administrator, diradmin. To create the kerberos principle for this account, run the following command:
+
+```shell
+kadmin.local -q "addprinc diradmin/admin"
 ```
