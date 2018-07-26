@@ -15,6 +15,7 @@ After this, I ran a series of distribution updates (42.1 -> 42.2 -> 42.3 -> 15.0
 * [openSUSE Documentation](https://doc.opensuse.org)
 * [openSUSE Support](https://en.opensuse.org/Portal:Support)
 
+
 ---
 
 ## Navigation:

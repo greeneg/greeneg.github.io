@@ -17,6 +17,7 @@ OK, first, Apple doesn't really intend you to install other operating systems on
 
 Now that these steps have been completed, reboot into the normal installation environment from the openSUSE DVD or Net-Inst CDROM.
 
+
 ---
 
 ## Navigation:

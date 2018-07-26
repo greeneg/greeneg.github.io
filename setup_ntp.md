@@ -91,9 +91,10 @@ For further information about NTP, look [here](http://www.ntp.org), and for info
 - [chronyd](https://linux.die.net/man/8/chronyd)
 - [chrony.conf](https://linux.die.net/man/5/chrony.conf)
 
+
 ---
 
-## Navigation
+## Navigation:
 
 * [Home](https://greeneg.github.io)
 * [Previous Step => Install openSUSE Leap 15](install_opensuse_leap_15.md)
