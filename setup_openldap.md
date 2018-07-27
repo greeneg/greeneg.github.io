@@ -547,21 +547,10 @@ The output from the status should look something like this:
            └─16353 /usr/sbin/slapd -h ldap:///   -f /etc/openldap/slapd.conf -u ldap -g ldap -o slp=on
 ```
 
-### Creating the Directory Administrator Kerberos principle
-
-Open Directory's normal administrative user is the Directory Administrator, diradmin. To create the kerberos principle for this account, run the following command:
-
-```shell
-kadmin.local -q "addprinc diradmin/admin"
-```
-
-### Base LDAP Structure
-
-
 ---
 
 ## Navigation:
 
 * [Home](https://greeneg.github.io)
 * [Previous Step => Setting up MIT Kerberos v5](setup_mit_krb5.md)
-
+* [Next Step => Populating Your Directory](populate_ldap.md)

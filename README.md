@@ -17,3 +17,4 @@ As this process is a pretty lengthy process, I've opted to split it into a few d
  * [Step 2: Setting up an NTP Service for Your Network](setup_ntp.md)
  * [Step 3: Setting up MIT Kerberos](setup_mit_krb5.md)
  * [Step 4: Setting up OpenLDAP](setup_openldap.md)
+ * [Step 5: Populating Your Directory](populate_ldap.md)
