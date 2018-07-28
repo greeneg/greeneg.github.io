@@ -49,9 +49,10 @@ In addition, I've chosen to add support for other Linux related services to the 
 ```
  - core
  - cosine
+ - nis
  - inetorgperson
+ - fmserver
  - openldap
- - rfc2307bis
  - apple_auxillary
  - samba3
  - apple
@@ -408,9 +409,10 @@ Now that the schema are in place, let's start updating our `/etc/openldap/slapd.
 ```
 include /etc/openldap/schema/core.schema
 include /etc/openldap/schema/cosine.schema
+include /etc/openldap/schema/nis.schema
 include /etc/openldap/schema/inetorgperson.schema
+include /etc/openldap/schema/fmserver.schema
 include /etc/openldap/schema/openldap.schema
-include /etc/openldap/schema/rfc2307bis.schema
 include /etc/openldap/schema/apple_auxillary.schema
 include /etc/openldap/schema/samba3.schema
 include /etc/openldap/schema/apple.schema
@@ -441,7 +443,7 @@ authz-regexp uid=host/([^,]*),cn=.*,cn=gssapi,cn=auth "uid=$1,cn=computers,dc=to
 authz-regexp uid=([^/]*)(/[^,]*|),cn=.*,cn=.*,cn=auth "uid=$1,cn=users,dc=tolharadys,dc=net"
 authz-regexp uid=([^/]*)(/[^,]*|),cn=.*,cn=auth "uid=$1,cn=users,dc=tolharadys,dc=net"
 ```
- 
+
 ### Access Controls
 
 The next section is critical in securing your LDAP installation. The access controls to the data in your LDAP should be carefully considered, as certain attributes and Distinguished Names should be controlled both for read and write. The following Access Controls match up with the ones used in macOS Server, which should give reasonable security over the data.
