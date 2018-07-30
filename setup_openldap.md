@@ -248,9 +248,9 @@ To better understand the changes I've done, lets look at a diff from the Apple v
  # Apple User Info object 1.3.6.1.4.1.63.1000.1.1.2.27
 ```
 
-As can be seen, many of the changes are to comment out the AutoFS entries, which are provided by the rfc2307bis schema; uncomment the container objectclass, as this is required for conformance to how Open Directory is structured for the Workgroup Manager or other tools to work correctly; and move the `authAuthority` attribute definitions near the top of the schema.
+As can be seen, many of the changes are to comment out the AutoFS entries, which are provided by the nis schema; uncomment the container objectclass, as this is required for conformance to how Open Directory is structured for the Workgroup Manager or other tools to work correctly; and move the `authAuthority` attribute definitions near the top of the schema.
 
-Next we modified the samba3 schema to bring back a couple of legacy entries that the Apple schema required:
+Next we modified the samba3 schema:
 
 ```diff
 --- /etc/openldap/schema/samba3.schema 2018-05-14 19:05:11.000000000 -0400
