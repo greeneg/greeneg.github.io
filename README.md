@@ -2,6 +2,16 @@
 
 This site is my personal collection of howtos and ruminations. Anything I post here is either my opinion, or based off experiences building out opsn source tooling for personal infrastructure projects.
 
+## ::Creating Packer Configurations That are GitHub Safe::
+
+While building out infra in my personal network, I realized it was time to automate the installations of the various virtual machines I use for either development, or running infra services. To deal with this, I chose HashiCorp's Packer tool to build the images.
+
+In order to allow posting the code to GitHub, however, I soon realized that I would need to create mechanisms to remove secrets, like the root password hash, SSH keys, etc. from the Packer JSON code. As ERB is easy to work with, I decided to write some Ruby scripts that read in some JSON snippets and process the ERB templates we can safely check into source control to create the variables.json file or the autoinstall.xml files used to drive Packer or SuSE' AutoYaST system.
+
+The code for this is [here](https://github.com/greeneg/tolharadys-packer-configuration)
+
+This code is continuing to morph to allow me to eventually call this from a resource our Terraform configuration to rebuild the image needed if it is older than a certain amount of days. PRs and Issues are welcome.
+
 ## ::Goodbye macOS Server, You Served Me Well::
 
 **THIS ARTICLE IS A WORK IN PROGRESS! There are things that will change as I work out issues.**
