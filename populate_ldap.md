@@ -153,3 +153,4 @@ To exit `ldapvi`, press the `:` character, then type `q`. Ldapvi will then reque
 
 * [Home](https://greeneg.github.io)
 * [Previous Step => Setting up OpenLDAP](setup_openldap.md)
+* [Next Step => Adding Needed Records to DNS](modify_local_dns.md)
