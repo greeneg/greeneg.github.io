@@ -68,6 +68,10 @@ And, finally, LDAP without TLS encryption is available at port 389 on `wotan`.
 
 All of these are listed with a 0 priority, as they are all hosted on the same host. If there were replicas of each service, this would have multiple entries with different priority levels. Additionally, each of these records have a weight of 100. As there is only one host running these services, the `weight` value is not really important, however, again if the services were replicated on multiple hosts, this number would allow breaking ties for which instance should be looked at first when querying for the service.
 
+---
+
+## Navigation:
+
 
 * [Home](https://greeneg.github.io)
 * [Previous Step => Populating Your Directory](populating_your_ldap.md)
