@@ -30,7 +30,7 @@ default does not like the format of `SRV` records, and will not load "invalid"
 zones with them in them. To work around this, add the following line to your
 `/etc/named.conf` in the zone definition for your domain:
 
-```
+```YAML
 check-names: ignore;
 ```
 
@@ -38,7 +38,7 @@ For my domain, I have split the zone definitions from the main `named.conf` as
 an include that holds all of the zone source definitions. Below is the internal
 zone definition stanza for my domain:
 
-```
+```DNS Zone
 zone "tolharadys.net" {
     type master;
     file "/etc/named.d/tolharadys.net";
@@ -56,7 +56,7 @@ a `TXT` record to automatically discover what the local realm is. To make this
 available, create a `TXT` resource record similar to this, but modified for
 your network's realm name:
 
-```
+```DNS Zone
 _kerberos IN TXT "TOLHARADYS.NET"
 ```
 
@@ -73,7 +73,7 @@ syntax looks like so:
 
 For example, lets look at Kerberos and LDAP section for my network's zone file:
 
-```zone
+```DNS Zone
 _kerberos._tcp                          IN SRV  0  100 88   wotan
 _kerberos._udp                          IN SRV  0  100 88   wotan
 _kerberos-adm._tcp                      IN SRV  0  100 749  wotan
